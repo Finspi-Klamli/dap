@@ -37,7 +37,7 @@ public class DeveloperRestController {
         return developer;
     }
 
-    @DeleteMapping("/{ id}")
+    @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
         this.DEVELOPERS.removeIf(developer -> developer.getId().equals(id));
     }
