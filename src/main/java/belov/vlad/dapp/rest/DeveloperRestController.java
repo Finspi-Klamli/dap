@@ -1,10 +1,9 @@
 package belov.vlad.dapp.rest;
 
 import belov.vlad.dapp.model.Developer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,9 +24,21 @@ public class DeveloperRestController {
         return DEVELOPERS;
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('developers:read')")
     public Developer getById(@PathVariable Long id){
         Developer d = DEVELOPERS.stream().filter(developer -> developer.getId().equals(id)).findFirst().orElse(null);
         System.out.println(d);
         return d;
+    }
+    @PostMapping
+    @PreAuthorize("hasAuthority('developers:write')")
+    public Developer create(@RequestBody Developer developer){
+        this.DEVELOPERS.add(developer);
+        return developer;
+    }
+
+    @DeleteMapping("/{ id}")
+    public void deleteById(@PathVariable Long id){
+        this.DEVELOPERS.removeIf(developer -> developer.getId().equals(id));
     }
 }
