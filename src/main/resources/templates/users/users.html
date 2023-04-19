@@ -24,7 +24,7 @@
                 <th th:text="${user.getPassword()}"></th>
                 <th th:text="${user.getRole()}"></th>
                 <th th:text="${user.getStatus()}"></th>
-                <th><a href="@{/{id}(id=${user.getId()})}">Ссылка</a></th>
+                <th><a th:href="@{/admin/users/{id}(id=${user.getId()})}">Ссылка</a></th>
             </tr>
         </table>
     </div>
