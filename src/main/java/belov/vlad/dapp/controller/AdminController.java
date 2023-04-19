@@ -4,14 +4,16 @@ import belov.vlad.dapp.model.User;
 import belov.vlad.dapp.repository.UserRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasAuthority('admin')")
 public class AdminController {
     private final UserRepository userRepository;
 
@@ -19,8 +21,15 @@ public class AdminController {
         this.userRepository = userRepository;
     }
     @GetMapping("/users")
-    @PreAuthorize("hasAuthority('admin')")
-    public List<User> getUsers(){
-        return userRepository.findAll();
+    public String getUsersPage(Model model){
+        model.addAttribute("users",userRepository.findAll());
+        return "users";
     }
+    @GetMapping("/users/{id}")
+    public String getUserInfo(@PathVariable("id") int id, Model model){
+        Optional<User> u = userRepository.findById(Integer.toUnsignedLong(id));
+        model.addAttribute("user", u);
+        return "userInfo";
+    }
+
 }
