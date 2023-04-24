@@ -6,14 +6,17 @@
 </head>
 <body>
 <div>
-    <p th:text="${user.getId()}">       VALUE</p>
-    <p th:text="${user.getFirstName()}">VALUE</p>
-    <p th:text="${user.getLastName()}"> VALUE</p>
-    <p th:text="${user.getEmail()}">    VALUE</p>
-    <p th:text="${user.getPassword()}"> VALUE</p>
-    <p th:text="${user.getRole()}">     VALUE</p>
-    <p th:text="${user.getStatus()}">   VALUE</p>
+    <a th:href = "@{/admin/users}">Назад</a>
+    <p  > ID     :<span th:text="${user.getId()}"       /></p>
+    <p  > Имя    :<span th:text="${user.getFirstName()}"/></p>
+    <p  > Фамилия:<span th:text="${user.getLastName()}" /></p>
+    <p  > Почта  :<span th:text="${user.getEmail()}"    /></p>
+    <p  > Пароль :<span th:text="${user.getPassword()}" /></p>
+    <p  > Роль   :<span th:text="${user.getRole()}"     /></p>
+    <p  > Статус :<span th:text="${user.getStatus()}"   /></p>
 </div>
-<a th:href = "@{/admin/users}">Назад</a>
+<a th:href = "@{/admin/users/{id}(id=${user.getId()})/edit}">Изменить</a>
+<a th:href = "@{/admin/users/{id}(id=${user.getId()})/delete}">Удалить</a>
+
 </body>
 </html>

@@ -43,4 +43,11 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "status")
     private Status status;
+
+    public void changeFields(User newFieldsUser){
+        this.email = newFieldsUser.getEmail();
+        this.password = newFieldsUser.getPassword();
+        this.firstName = newFieldsUser.getFirstName();
+        this.lastName = newFieldsUser.getLastName();
+    }
 }

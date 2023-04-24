@@ -9,7 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -32,17 +35,28 @@ public class AdminUserController {
         return "users/userInfo";
     }
     @GetMapping("/new")
-    public String newUser(Model model){
-        User user = new User();
-        user.setStatus(Status.ACTIVE);
-        model.addAttribute("user", user);
+    public String newUser(@ModelAttribute("user") User user, Model model){
         model.addAttribute("roles", Role.values());
         return "users/new";
     }
-    @PostMapping()
-    public String createUser(@ModelAttribute("user") User user){
+    @PostMapping("/new")
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
+        if (bindingResult.hasErrors())
+            return "users/new";
+
+        user.setStatus(Status.ACTIVE);
         userService.create(user);
         return "redirect:/admin/users";
+    }
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id){
+        model.addAttribute("user", userService.getById(Integer.toUnsignedLong(id)));
+        return "users/edit";
+    }
+    @PatchMapping("/{id}")
+    public String update(@PathVariable("id") int id, @ModelAttribute("user ") User user){
+        userService.update(user);
+        return "redirect:/admin/"+id;
     }
         //c |  u | d
 }
