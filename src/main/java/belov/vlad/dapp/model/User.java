@@ -17,8 +17,7 @@ public class User {
 
     @NotEmpty(message = "Поле 'почта' не может быть пустым")
     @Email(message = "Неверный формат почты")
-    @Column(name = "email")
-    @Size(max = 255)
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotEmpty(message = "Поле 'пароль' не может быть пустым")
@@ -50,4 +49,6 @@ public class User {
         this.firstName = newFieldsUser.getFirstName();
         this.lastName = newFieldsUser.getLastName();
     }
+
+
 }

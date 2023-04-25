@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,28 +20,30 @@ import javax.validation.Valid;
 @PreAuthorize("hasAuthority('admin')")
 public class AdminUserController {
     private final UserServiceImpl userService;
-
     public AdminUserController(UserServiceImpl userService) {
         this.userService = userService;
     }
 
-    @GetMapping()
-    public String getUsersPage(Model model){
+    @GetMapping()   //ready
+    public String getUsers(Model model){
         model.addAttribute("users",userService.findAll());
         return "users/users";
     }
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")    //ready
     public String getUserInfo(@PathVariable("id") int id, Model model){
         model.addAttribute("user", userService.getById(Integer.toUnsignedLong(id)));
         return "users/userInfo";
     }
-    @GetMapping("/new")
+    @GetMapping("/new") //ready
     public String newUser(@ModelAttribute("user") User user, Model model){
-        model.addAttribute("roles", Role.values());
         return "users/new";
     }
-    @PostMapping("/new")
+    @PostMapping("/new")    //ready
     public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){
+        if(userService.findByEmail(user.getEmail()) != null){
+            FieldError error = new FieldError("user", "email", "Почта уже существует");
+            bindingResult.addError(error);
+        }
         if (bindingResult.hasErrors())
             return "users/new";
 
