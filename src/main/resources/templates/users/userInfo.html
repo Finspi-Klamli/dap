@@ -15,8 +15,9 @@
     <p  > Роль   :<span th:text="${user.getRole()}"     /></p>
     <p  > Статус :<span th:text="${user.getStatus()}"   /></p>
 </div>
-<a th:href = "@{/admin/users/{id}(id=${user.getId()})/edit}">Изменить</a>
-<a th:href = "@{/admin/users/{id}(id=${user.getId()})/delete}">Удалить</a>
-
+<a th:href="@{/admin/users/{id}/edit(id=${user.getId()})}">Изменить</a>
+    <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
+        <input type="submit" value="Удалить">
+    </form>
 </body>
 </html>

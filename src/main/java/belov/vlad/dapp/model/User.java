@@ -48,6 +48,8 @@ public class User {
         this.password = newFieldsUser.getPassword();
         this.firstName = newFieldsUser.getFirstName();
         this.lastName = newFieldsUser.getLastName();
+        this.role = newFieldsUser.getRole();
+        this.status = newFieldsUser.getStatus();
     }
 
 

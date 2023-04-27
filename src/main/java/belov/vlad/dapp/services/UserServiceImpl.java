@@ -46,10 +46,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void update(User user) {
-        User u = findByEmail(user.getEmail());
-        System.out.println(u);
+        User u = getById(user.getId());
         u.changeFields(user);
-        System.out.println(u);
         userRepository.save(u);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        userRepository.deleteById(Integer.toUnsignedLong(id));
     }
 }

@@ -53,13 +53,29 @@ public class AdminUserController {
     }
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){
+        System.out.println("GETMAPPING");
+        System.out.println(userService.getById(Integer.toUnsignedLong(id)));
         model.addAttribute("user", userService.getById(Integer.toUnsignedLong(id)));
         return "users/edit";
     }
-    @PatchMapping("/{id}")
-    public String update(@PathVariable("id") int id, @ModelAttribute("user ") User user){
+    @PatchMapping("/{id}/edit")
+    public String update(@PathVariable("id") int id, @ModelAttribute("user") @Valid User user, BindingResult bindingResult){
+        User u = userService.findByEmail(user.getEmail());
+        if(u != null && user.getId()!= u.getId()){
+            FieldError error = new FieldError("user", "email", "Почта уже существует");
+            bindingResult.addError(error);
+        }
+        if (bindingResult.hasErrors())
+            return "users/edit";
+
+        System.out.println("patchMAPPING");
+        System.out.println(user);
         userService.update(user);
-        return "redirect:/admin/"+id;
+        return "redirect:/admin/users/"+id;
     }
-        //c |  u | d
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id){
+        userService.deleteById(id);
+        return "redirect:/admin/users";
+    }
 }
