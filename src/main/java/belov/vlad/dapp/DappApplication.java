@@ -11,8 +11,8 @@ public class DappApplication implements WebMvcConfigurer {
 	public static void main(String[] args) {
 		SpringApplication.run(DappApplication.class, args);
 	}
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
-	}
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+//	}
 }

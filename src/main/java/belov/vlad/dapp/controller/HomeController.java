@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     @GetMapping()
     public String homePageNotSignedIn(){
-        return "pages/home/homePageNotSignedIn";
+        return "pages/home/homeNotSignedIn";
+    }
+    @GetMapping("/login")
+    public String getLoginPage(){
+        return "login";
     }
 }
