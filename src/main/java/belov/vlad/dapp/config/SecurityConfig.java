@@ -36,15 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/").permitAll()
-                .antMatchers("/home").permitAll()
+                .antMatchers( "/","/home").permitAll()
+                .antMatchers("/index").permitAll()
                 .antMatchers("/webjars/bootstrap/4.3.1/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/fragments/home")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
@@ -56,10 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/resources/**"); // #3
+    public void configure(WebSecurity web) {
+        web.ignoring()
+                .antMatchers(
+                        "/**");
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
