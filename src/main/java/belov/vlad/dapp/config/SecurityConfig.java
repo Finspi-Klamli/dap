@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/auth/login")
                 .defaultSuccessUrl("/")
-                .failureUrl("/auth/login").permitAll()
+                .failureUrl("/auth/login?error=true")
                 .permitAll()
                 .and()
                 .logout()
@@ -54,21 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/auth/login");
     }
 
-
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-//                .loginPage("/auth/login");
-//                .defaultSuccessUrl("/", true)
-//                .failureUrl("/auth/login").permitAll()
-//                .and()
-//                .logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
-//                .deleteCookies("JSESSIONID")
-//                .and()
-//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
-//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

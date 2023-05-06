@@ -36,7 +36,7 @@ public class AdminUserController {
     }
     @GetMapping("/new") //ready
     public String newUser(@ModelAttribute("user") User user, Model model){
-        return "users/new";
+        return "admin/users/new";
     }
     @PostMapping("/new")    //ready
     public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult){

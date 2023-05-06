@@ -9,10 +9,31 @@ th, td {
 }
 
 input[type="text"] {
-    margin-bottom: 10px;
+    margin: 10px
 }
 
 h1 {
     text-align: center;
     margin-bottom: 20px;
+}
+.\.button{
+    display: inline-block;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding: 10px;
+    margin: 10px;
+    width: 230px;
+}
+.\.button:hover{
+    background-color: darkgrey;
+    color: white;
+    text-decoration: none;
+}
+.horizontal-container {
+    display: flex;
 }

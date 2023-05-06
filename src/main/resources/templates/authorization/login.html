@@ -24,11 +24,19 @@
                 <h2>Вход в аккаунт</h2>
                 <div class="form-group">
                     <label for="username">Почта</label>
-                    <input type="text" id="username" name="username" placeholder="Введите почту" required="required"/>
+                    <input class="ss" type="text" id="username" name="username" placeholder="Введите почту" required="required"/>
+                    <div th:if="${errorMessage}">
+                        <p style="color: red;" th:text="${errorMessage}"></p>
+                        <style>
+                            .ss {
+                                border-color: red !important;
+                            }
+                        </style>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Пароль</label>
-                    <input type="password" id="password" name="password" placeholder="Введите пароль" required="required"/>
+                    <input class="ss" type="password" id="password" name="password" placeholder="Введите пароль" required="required"/>
                 </div>
                 <div class="form-group">
                     <button type="submit">Войти</button>
