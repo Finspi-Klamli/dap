@@ -27,12 +27,12 @@ public class AdminUserController {
     @GetMapping()   //ready
     public String getUsers(Model model){
         model.addAttribute("users",userService.findAll());
-        return "users/users";
+        return "admin/users/users";
     }
     @GetMapping("/{id}")    //ready
     public String getUserInfo(@PathVariable("id") int id, Model model){
         model.addAttribute("user", userService.getById(Integer.toUnsignedLong(id)));
-        return "users/userInfo";
+        return "admin/users/userinfo";
     }
     @GetMapping("/new") //ready
     public String newUser(@ModelAttribute("user") User user, Model model){
@@ -45,7 +45,7 @@ public class AdminUserController {
             bindingResult.addError(error);
         }
         if (bindingResult.hasErrors())
-            return "users/new";
+            return "admin/users/new";
 
         user.setStatus(Status.ACTIVE);
         userService.create(user);
@@ -56,18 +56,19 @@ public class AdminUserController {
         System.out.println("GETMAPPING");
         System.out.println(userService.getById(Integer.toUnsignedLong(id)));
         model.addAttribute("user", userService.getById(Integer.toUnsignedLong(id)));
-        return "users/edit";
+        return "admin/users/edit";
     }
     @PatchMapping("/{id}/edit")
     public String update(@PathVariable("id") int id, @ModelAttribute("user") @Valid User user, BindingResult bindingResult){
         User u = userService.findByEmail(user.getEmail());
+        System.out.println(user);
         if(u != null && user.getId()!= u.getId()){
             FieldError error = new FieldError("user", "email", "Почта уже существует");
             bindingResult.addError(error);
         }
-        if (bindingResult.hasErrors())
-            return "users/edit";
-
+        if (bindingResult.hasErrors()) {
+            return "admin/users/edit";
+        }
         System.out.println("patchMAPPING");
         System.out.println(user);
         userService.update(user);

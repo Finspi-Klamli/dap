@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Профиль пользователя</title>
+    <link rel="stylesheet" th:href="@{/css/editpas.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form class="change-password-form" th:action="@{/profile/change-password}" th:method="PATCH">
+                <h2>Изменение пароля</h2>
+                <div class="form-group">
+                    <label for="currentPassword">Текущий пароль:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Новый пароль:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Подтвердите пароль:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <input class="bt" type="submit" value="Изменить пароль">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

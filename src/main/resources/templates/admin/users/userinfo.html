@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Иннформация о пользователе</title>
+    <link >
+    <div th:replace="pages/home/header :: header-css"/>
 </head>
 <body>
+<div th:replace="pages/home/header :: header"/>
 <div>
     <a th:href = "@{/admin/users}">Назад</a>
     <p  > ID     :<span th:text="${user.getId()}"       /></p>
@@ -16,8 +19,8 @@
     <p  > Статус :<span th:text="${user.getStatus()}"   /></p>
 </div>
 <a th:href="@{/admin/users/{id}/edit(id=${user.getId()})}">Изменить</a>
-    <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
-        <input type="submit" value="Удалить">
-    </form>
+<form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
+    <input type="submit" value="Удалить">
+</form>
 </body>
 </html>

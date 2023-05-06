@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWt0Q1T38CV9gQLZMwwDO8fEm5NcZuUCTX" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+
+</head>
+<body>
+<div class="header">
+    <nav class="navbar navbar-expand navbar-dark navbar-fixed-top" >
+        <a class="navbar-brand"  href="/">
+            <img src="/logo.png" height="60" alt="logo" style="padding: 0;">
+        </a>
+    </nav>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <form class="login-form" th:action="@{/auth/login}" method="post">
+                <h2>Вход в аккаунт</h2>
+                <div class="form-group">
+                    <label for="username">Почта</label>
+                    <input type="text" id="username" name="username" placeholder="Введите почту" required="required"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" name="password" placeholder="Введите пароль" required="required"/>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Войти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

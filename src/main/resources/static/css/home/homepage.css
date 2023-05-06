@@ -2,7 +2,7 @@
     border: 4px outset #5C6464;
     border-radius: 40px 40px 40px 40px;
     font-family: Verdana, Geneva, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
 }
 .navbar-dark .navbar-nav .nav-link {
@@ -22,5 +22,16 @@
 }
 .nav-link:hover{
     color: black !important;
+}
+button{
+    padding: 0px;
+    margin: 0px;
+    height: 28px;
+    border: none;
+    line-height: 0px;
+    background-color: transparent;
+}
+button:focus {
+    outline: none;
 }
 

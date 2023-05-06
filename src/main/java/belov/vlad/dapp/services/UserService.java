@@ -13,4 +13,8 @@ public interface UserService {
     void update(User user);
 
     void deleteById(int id);
+    boolean checkPassword(User user, String password);
+
+    void changePassword(User user, String newPassword);
+    boolean isAdmin(User user);
 }

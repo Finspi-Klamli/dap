@@ -1,12 +1,29 @@
-<!DOCTYPE html>
-<html lang="en", xmlns:th="http://thymeleaf.org">
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <meta charset="UTF-8">
 </head>
 <body>
-    <div th:fragment="footer">
-        &copy; 2016 Footer
+<div th:fragment="footer">
+    <div class="container">
+        <footer>
+            <!-- this is footer -->
+            &copy; 2023 majars.com
+            <span sec:authorize="isAuthenticated()">
+                | Logged user: <span sec:authentication="name"></span> |
+                Roles: <span sec:authentication="principal.authorities"></span> |
+            </span>
+<!--            <div sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                This content is only shown to administrators.-->
+<!--            </div>-->
+<!--            <div sec:authorize="hasRole('ROLE_USER')">-->
+<!--                This content is only shown to users.-->
+<!--            </div>-->
+            <script type="text/javascript"
+                    src="webjars/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        </footer>
     </div>
+
+</div>
 </body>
 </html>

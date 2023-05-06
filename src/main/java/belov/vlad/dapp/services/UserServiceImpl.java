@@ -1,5 +1,6 @@
 package belov.vlad.dapp.services;
 
+import belov.vlad.dapp.model.Role;
 import belov.vlad.dapp.model.Status;
 import belov.vlad.dapp.model.User;
 import belov.vlad.dapp.repository.UserRepository;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User findByEmail(String email) {
+        System.out.println("FIND FIND");
         return userRepository.findByEmail(email).orElse(null);
     }
 
@@ -50,9 +52,24 @@ public class UserServiceImpl implements UserService{
         u.changeFields(user);
         userRepository.save(u);
     }
-
     @Override
     public void deleteById(int id) {
         userRepository.deleteById(Integer.toUnsignedLong(id));
+    }
+    @Override
+    public boolean checkPassword(User user, String password) {
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
+    @Override
+    public void changePassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+    @Override
+    public boolean isAdmin(User user) {
+        if(user.getRole() == Role.ADMIN)
+            return true;
+        else return false;
     }
 }

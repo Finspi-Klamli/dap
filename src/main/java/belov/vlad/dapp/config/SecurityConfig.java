@@ -36,30 +36,40 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers( "/").permitAll()
-                .antMatchers("/webjars/bootstrap/4.3.1/**").permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
-                .defaultSuccessUrl("/fragments/home")
+                .loginPage("/auth/login")
+                .defaultSuccessUrl("/")
+                .failureUrl("/auth/login").permitAll()
+                .permitAll()
                 .and()
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/login")
-                .and()
-                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+                .logoutSuccessUrl("/auth/login");
     }
-    @Override
-    public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers(
-                        "/**");
-    }
+
+
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .formLogin()
+//                .loginPage("/auth/login");
+//                .defaultSuccessUrl("/", true)
+//                .failureUrl("/auth/login").permitAll()
+//                .and()
+//                .logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "POST"))
+//                .deleteCookies("JSESSIONID")
+//                .and()
+//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+//    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
