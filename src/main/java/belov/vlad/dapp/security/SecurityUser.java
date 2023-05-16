@@ -1,9 +1,9 @@
 package belov.vlad.dapp.security;
 
-import belov.vlad.dapp.model.Status;
 import belov.vlad.dapp.model.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -63,12 +63,12 @@ public class SecurityUser implements UserDetails {
 
     public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), user.getPassword(),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getStatus().equals(Status.ACTIVE),
-                user.getRole().getAuthorities()
+        user.getEmail(), user.getPassword(),
+                user.getStatus().getName().equals(Status.ACTIVE.name()),
+                user.getStatus().getName().equals(Status.ACTIVE.name()),
+                user.getStatus().getName().equals(Status.ACTIVE.name()),
+                user.getStatus().getName().equals(Status.ACTIVE.name()),
+                AuthorityUtils.createAuthorityList(user.getRole().getName())
         );
     }
 }

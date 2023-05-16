@@ -1,4 +1,4 @@
-package belov.vlad.dapp.model;
+package belov.vlad.dapp.security;
 
 public enum Status {
     ACTIVE, BANNED

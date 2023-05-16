@@ -5,6 +5,7 @@ public enum Permission {
     DEVELOPER_WRITE("developers:write"),
 
     ADMIN_PERMISSION("admin"),
+    USER_PERMISSION("user"),
     USER_CREATE("user:create"),
     USER_READ("user:read"),
     USER_DELETE("user:delete"),

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" , xmlns:th="http://thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Пользователи</title>
+    <link rel="stylesheet" th:href="@{/css/users.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<h1>Таблица с изменениями данных пользователей</h1>
+<div style="padding: 20px">
+    <div class="horizontal-container">
+        <input type="text" id="searchInput" placeholder="Поиск..." />
+    </div>
+    <table id="dataTable">
+        <thead>
+        <tr>
+            <th>Id       </th>
+            <th>Дата изменения</th>
+            <th>Имя поля     </th>
+            <th>Старое значение</th>
+            <th>Новое значение  </th>
+            <th>Id пользователя</th>
+            <th>Ссылка на пользователя</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="d : ${data}">
+            <td th:text="${d.getId()}"></td>
+            <td th:text="${d.getChangeDate()}"></td>
+            <td th:text="${d.getFieldName()}"></td>
+            <td th:text="${d.getOldValue()}"></td>
+            <td th:text="${d.getNewValue()}"></td>
+            <td th:text="${d.getUser().getId()}"></td>
+            <th><a th:href="@{/admin/users/{id}(id=${d.getUser().getId()})}">Ссылка</a></th>
+        </tbody>
+    </table>
+</div>
+<div>
+</div>
+
+<script src="/js/users.js"></script>
+</body>
+</html>

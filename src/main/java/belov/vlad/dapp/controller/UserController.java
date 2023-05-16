@@ -2,6 +2,7 @@ package belov.vlad.dapp.controller;
 
 import belov.vlad.dapp.config.SecurityUtils;
 import belov.vlad.dapp.model.User;
+import belov.vlad.dapp.services.UserDataChangeServiceImpl;
 import belov.vlad.dapp.services.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,14 +20,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-@PreAuthorize("hasAuthority('admin') OR hasAuthority('user') OR hasAuthority('moderator')")
+@PreAuthorize("hasAuthority('admin') or hasAuthority('user')")
 public class UserController {
-
     private final UserServiceImpl userService;
+    private final UserDataChangeServiceImpl userDataChangeService;
 
-
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, UserDataChangeServiceImpl userDataChangeService) {
         this.userService = userService;
+        this.userDataChangeService = userDataChangeService;
     }
 
     @GetMapping()
@@ -52,15 +53,16 @@ public class UserController {
     }
 
     @PatchMapping("/profile/edit")
-    public String update(@AuthenticationPrincipal UserDetails currentUser, @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        User u = userService.findByEmail(currentUser.getUsername());
-        if (u != null && user.getId() != u.getId()) {
+    public String update(@AuthenticationPrincipal UserDetails currentUser, @ModelAttribute("user") @Valid User newUser, BindingResult bindingResult) {
+        User oldUser = userService.findByEmail(currentUser.getUsername());
+        if (oldUser != null && newUser.getId() != oldUser.getId()) {
             FieldError error = new FieldError("user", "email", "Почта уже существует");
             bindingResult.addError(error);
         }
         if (bindingResult.hasErrors())
             return "user/editinfo";
-        userService.update(user);
+        userDataChangeService.saveUserDataChange(oldUser, newUser);
+        userService.update(newUser);
         return "redirect:/profile";
     }
 
@@ -90,5 +92,9 @@ public class UserController {
         userService.changePassword(user, newPassword);
         redirectAttributes.addFlashAttribute("success", "Password changed successfully");
         return "redirect:/profile";
+    }
+    @GetMapping("technological-maps")
+    public String getThechnicalMapsPage(){
+        return "technological-maps";
     }
 }

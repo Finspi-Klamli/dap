@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Панель администратора</title>
+    <div th:replace="pages/home/header :: header-css"/>
 </head>
 <body>
+<div th:replace="pages/home/header :: header"/>
     <a href="/admin/users">Пользователи</a>
+    <a href="/admin/users/user-data-changes">Изменения данных пользователей</a>
+    <a href="/admin/users/user-data-changes">Заявки на утверждение</a>
+    <a href="/admin/users/user-data-changes">Технологические карты</a>
+
 </body>
 </html>

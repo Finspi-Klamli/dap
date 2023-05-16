@@ -1,7 +1,7 @@
 package belov.vlad.dapp.services;
 
-import belov.vlad.dapp.model.Role;
 import belov.vlad.dapp.model.Status;
+import belov.vlad.dapp.security.Role;
 import belov.vlad.dapp.model.User;
 import belov.vlad.dapp.repository.UserRepository;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User create(User user) {
-        user.setStatus(Status.ACTIVE);
+        user.setStatus(new Status("ACTIVE"));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -68,7 +67,7 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public boolean isAdmin(User user) {
-        if(user.getRole() == Role.ADMIN)
+        if(user.getRole().getName() == "admin")
             return true;
         else return false;
     }

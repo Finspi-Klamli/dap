@@ -1,5 +1,6 @@
-package belov.vlad.dapp.model;
+package belov.vlad.dapp.security;
 
+import belov.vlad.dapp.model.Permission;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;

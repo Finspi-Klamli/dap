@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<ul id="file-tree">
+    <li>
+        <span class="folder">Папка 1</span>
+        <ul>
+            <li>
+                <a href="#" class="file">Файл 1.1</a>
+            </li>
+            <li>
+                <span class="folder">Папка 1.2</span>
+                <ul>
+                    <li>
+                        <a href="#" class="file">Файл 1.2.1</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <span class="folder">Папка 2</span>
+        <ul>
+            <li>
+                <a href="#" class="file">Файл 2.1</a>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+<script>
+    // Находим все элементы с классом "folder"
+    var folders = document.querySelectorAll('.folder');
+
+    // Для каждого элемента устанавливаем обработчик клика
+    for (var i = 0; i < folders.length; i++) {
+        folders[i].addEventListener('click', function() {
+            // Находим родительский элемент (li)
+            var parent = this.parentNode;
+
+            // Находим все вложенные элементы (ul)
+            var children = parent.querySelectorAll('ul');
+
+            // Переключаем класс "hidden" у каждого вложенного элемента
+            for (var j = 0; j < children.length; j++) {
+                children[j].classList.toggle('hidden');
+            }
+        });
+    }
+</script>
+
+<style>
+    /* Стили для скрытия вложенных элементов */
+    .hidden {
+        display: none;
+    }
+</style>
+
+</body>
+</html>

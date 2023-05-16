@@ -17,8 +17,9 @@
         <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
             <input class="button-delete" type="submit" value="Удалить">
         </form>
-        <a class="button" th:href="@{/admin/users}">Назад</a>
     </div>
+
+
     <div class="form-profile">
         <h2>Информация о пользователе</h2>
         <div class="form-divide">

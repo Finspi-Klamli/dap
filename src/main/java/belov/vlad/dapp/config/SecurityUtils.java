@@ -16,10 +16,27 @@ public class SecurityUtils {
         if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;
             return userDetails.getAuthorities().stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("admin"));
+                    .anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
         }
 
         return false;
     }
+    public static boolean isUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
+
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            return userDetails.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("USER"));
+        }
+
+        return false;
+    }
+
+
 
 }

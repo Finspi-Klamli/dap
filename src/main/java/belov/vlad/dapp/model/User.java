@@ -35,12 +35,11 @@ public class User {
     @Size(max = 100)
     private String lastName;
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "role")
+    @ManyToOne
+    @JoinColumn(name = "role_id")
     private Role role;
-
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "status")
+    @ManyToOne
+    @JoinColumn(name = "status_id")
     private Status status;
 
     public void changeFields(User newFieldsUser){

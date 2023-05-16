@@ -1,12 +1,10 @@
 package belov.vlad.dapp.controller;
 
-import belov.vlad.dapp.model.Role;
 import belov.vlad.dapp.model.Status;
 import belov.vlad.dapp.model.User;
-import belov.vlad.dapp.repository.UserRepository;
+import belov.vlad.dapp.services.UserDataChangeServiceImpl;
 import belov.vlad.dapp.services.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,13 +15,14 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/users")
-@PreAuthorize("hasAuthority('admin')")
+@PreAuthorize("hasAuthority('user')")
 public class AdminUserController {
     private final UserServiceImpl userService;
-    public AdminUserController(UserServiceImpl userService) {
+    private final UserDataChangeServiceImpl userDataChangeService;
+    public AdminUserController(UserServiceImpl userService, UserDataChangeServiceImpl userDataChangeService) {
         this.userService = userService;
+        this.userDataChangeService = userDataChangeService;
     }
-
     @GetMapping()   //ready
     public String getUsers(Model model){
         model.addAttribute("users",userService.findAll());
@@ -47,7 +46,7 @@ public class AdminUserController {
         if (bindingResult.hasErrors())
             return "admin/users/new";
 
-        user.setStatus(Status.ACTIVE);
+        user.setStatus(new Status("ACTIVE"));
         userService.create(user);
         return "redirect:/admin/users";
     }
@@ -59,24 +58,30 @@ public class AdminUserController {
         return "admin/users/edit";
     }
     @PatchMapping("/{id}/edit")
-    public String update(@PathVariable("id") int id, @ModelAttribute("user") @Valid User user, BindingResult bindingResult){
-        User u = userService.findByEmail(user.getEmail());
-        System.out.println(user);
-        if(u != null && user.getId()!= u.getId()){
+    public String update(@PathVariable("id") int id, @ModelAttribute("user") @Valid User newUser, BindingResult bindingResult){
+        User oldUser = userService.findByEmail(newUser.getEmail());
+        System.out.println(newUser);
+        if(oldUser != null && newUser.getId()!= oldUser.getId()){
             FieldError error = new FieldError("user", "email", "Почта уже существует");
             bindingResult.addError(error);
         }
         if (bindingResult.hasErrors()) {
             return "admin/users/edit";
         }
-        System.out.println("patchMAPPING");
-        System.out.println(user);
-        userService.update(user);
+
+        userDataChangeService.saveUserDataChange(oldUser,newUser);
+
+        userService.update(newUser);
         return "redirect:/admin/users/"+id;
     }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id){
         userService.deleteById(id);
         return "redirect:/admin/users";
+    }
+    @GetMapping("/user-data-changes")
+    public String getUserDataChangesPage(Model model){
+        model.addAttribute("data", userDataChangeService.getAllUserDataChanges());
+    return "admin/users/users-data-changes";
     }
 }
