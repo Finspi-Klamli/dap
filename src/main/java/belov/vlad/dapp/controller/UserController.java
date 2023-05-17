@@ -1,9 +1,12 @@
 package belov.vlad.dapp.controller;
 
 import belov.vlad.dapp.config.SecurityUtils;
+import belov.vlad.dapp.model.Equipment;
+import belov.vlad.dapp.model.ManufacturingProcess;
+import belov.vlad.dapp.model.Product;
 import belov.vlad.dapp.model.User;
-import belov.vlad.dapp.services.UserDataChangeServiceImpl;
-import belov.vlad.dapp.services.UserServiceImpl;
+import belov.vlad.dapp.repository.EquipmentRepository;
+import belov.vlad.dapp.services.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,16 +21,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @PreAuthorize("hasAuthority('admin') or hasAuthority('user')")
 public class UserController {
     private final UserServiceImpl userService;
     private final UserDataChangeServiceImpl userDataChangeService;
+    private final EquipmentService equipmentService;
+    private final ManufacturingProcessService manufacturingProcessService;
+    private final ProductsService productsService;
 
-    public UserController(UserServiceImpl userService, UserDataChangeServiceImpl userDataChangeService) {
+    public UserController(UserServiceImpl userService, UserDataChangeServiceImpl userDataChangeService, EquipmentService equipmentService, ManufacturingProcessService manufacturingProcessService, ProductsService productsService) {
         this.userService = userService;
         this.userDataChangeService = userDataChangeService;
+        this.equipmentService = equipmentService;
+        this.manufacturingProcessService = manufacturingProcessService;
+        this.productsService = productsService;
     }
 
     @GetMapping()
@@ -94,7 +107,19 @@ public class UserController {
         return "redirect:/profile";
     }
     @GetMapping("technological-maps")
-    public String getThechnicalMapsPage(){
+    public String getThechnicalCardsPage(Model model)
+    {
+        List<Equipment> equipments = equipmentService.findAll();
+        model.addAttribute("equipments", equipments);
+//        Map<String, List<String>> map = new HashMap();
+//        for (Equipment e : equipments){
+//            List<String> l = new ArrayList<>();
+//            for (ManufacturingProcess mp:e.getManufacturingProcessList()){
+//                l.add(mp.getName());
+//            }
+//            map.put(e.getName(),l);
+//        }
+//        System.out.println(map);
         return "technological-maps";
     }
 }

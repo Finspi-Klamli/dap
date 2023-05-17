@@ -19,6 +19,7 @@ public class UserDataChangeServiceImpl implements UserDataChangeService {
         this.userDataChangeRepository = userDataChangeRepository;
     }
 
+
     @Override
     public void saveUserDataChange(UserDataChange userDataChange) {
         userDataChangeRepository.save(userDataChange);

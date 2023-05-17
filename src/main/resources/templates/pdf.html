@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Files</title>
+</head>
+<body>
+<h1>Список PDF-файлов</h1>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Имя файла</th>
+  </tr>
+  <tr th:each="pdfFile : ${pdfFiles}">
+    <td th:text="${pdfFile.id}"></td>
+    <td th:text="${pdfFile.getName()}"></td>
+  </tr>
+</table>
+<h2>Загрузить новый PDF-файл</h2>
+<form th:action="@{/pdf/upload}" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" accept=".pdf">
+  <input type="submit" value="Загрузить">
+</form>
+
+<p th:if="${successMessage}" th:text="${successMessage}" style="color: green;"></p>
+<p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+</body>
+</html>

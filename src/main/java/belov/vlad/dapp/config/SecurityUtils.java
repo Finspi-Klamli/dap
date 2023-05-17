@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
 public class SecurityUtils {
 
     public static boolean isAdmin() {
@@ -16,7 +17,7 @@ public class SecurityUtils {
         if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;
             return userDetails.getAuthorities().stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("ADMIN"));
+                    .anyMatch(authority -> authority.getAuthority().equals("admin"));
         }
 
         return false;
@@ -31,12 +32,9 @@ public class SecurityUtils {
         if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;
             return userDetails.getAuthorities().stream()
-                    .anyMatch(authority -> authority.getAuthority().equals("USER"));
+                    .anyMatch(authority -> authority.getAuthority().equals("user"));
         }
 
         return false;
     }
-
-
-
 }

@@ -2,6 +2,7 @@ package belov.vlad.dapp.controller;
 
 import belov.vlad.dapp.model.Status;
 import belov.vlad.dapp.model.User;
+import belov.vlad.dapp.model.Role;
 import belov.vlad.dapp.services.UserDataChangeServiceImpl;
 import belov.vlad.dapp.services.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +47,7 @@ public class AdminUserController {
         if (bindingResult.hasErrors())
             return "admin/users/new";
 
-        user.setStatus(new Status("ACTIVE"));
+        user.setStatus(Status.ACTIVE);
         userService.create(user);
         return "redirect:/admin/users";
     }

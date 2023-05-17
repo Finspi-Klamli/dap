@@ -1,66 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en", xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <div th:replace="pages/home/header :: header-css"/>
+    <style>
+        .main-body{
+            background-color: #DCDCDC;
+            height: 700px; /* Задайте нужную высоту */
+            padding: 25px;
+        }
+        .container {
+            overflow: auto; /* Добавляет прокрутку */
+            width: 700px; /* Задайте нужную ширину */
+            height: 500px; /* Задайте нужную высоту */
+            margin: 0 auto; /* Центрирует контейнер по горизонтали */
+            padding: 20px;
+            background-color: #fff;
+            border: 4px solid black;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+        .cl_equipment {
+            cursor: pointer;
+        }
+
+        .cl_process, .cl_product {
+            margin-left: 10px;
+        }
+
+        .cl_process::before, .cl_product::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #ccc;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .cl_equipment.active, .cl_process.active, .cl_product.active {
+            font-weight: bold;
+        }
+
+        .cl_equipment ul, .cl_process ul, .cl_product ul {
+            margin-left: 20px;
+            display: none;
+        }
+
+        .cl_product {
+            display: flex;
+            align-items: center;
+            margin: 5px;
+        }
+
+        .cl_product a {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="pages/home/header :: header"/>
-<ul id="file-tree">
-    <li>
-        <span class="folder">Папка 1</span>
-        <ul>
-            <li>
-                <a href="#" class="file">Файл 1.1</a>
-            </li>
-            <li>
-                <span class="folder">Папка 1.2</span>
-                <ul>
-                    <li>
-                        <a href="#" class="file">Файл 1.2.1</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <span class="folder">Папка 2</span>
-        <ul>
-            <li>
-                <a href="#" class="file">Файл 2.1</a>
-            </li>
-        </ul>
-    </li>
-</ul>
+<div class="main-body">
 
+<div class="container">
+    <input type="text" id="searchInput" placeholder="Поиск..." oninput="searchTree()">
+    <ul>
+        <li th:each="equipment : ${equipments}">
+            <span class="cl_equipment" th:text="${equipment.getName()}"
+                  onclick="toggleList(this.nextElementSibling)"></span>
+            <ul style="display: none;">
+                <li class="cl_equipment" th:each="process : ${equipment.getManufacturingProcessList()}">
+                    <span class="cl_process" th:text="${process.getName()}"
+                          onclick="toggleList(this.nextElementSibling)"></span>
+                    <ul style="display: none;">
+                        <li class="cl_equipment" th:each="product : ${process.getProducts()}">
+                            <span class="cl_product" th:text="${product.getName()}"
+                                  onclick="toggleList(this.nextElementSibling)"></span>
+                            <ul style="display: none;">
+                                <li class="cl_equipment" th:each="technologicalCard : ${product.getTechnologicalCard()}">
+                                        <span th:text="${technologicalCard.getName()}"> </span>
+<!--                                        <select id="versionSelect" onchange="openTechnologicalCard(this)">-->
+<!--                                            <option th:each="version : ${technologicalCard.getVersions()}" th:value="${version}" th:text="${version}"></option>-->
+<!--                                        </select>-->
+                                        <a href='#'>   Открыть</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+</div>
+<!--<script>-->
+<!--    function toggleList(element) {-->
+<!--        if (element.style.display === "none") {-->
+<!--            element.style.display = "block";-->
+<!--        } else {-->
+<!--            element.style.display = "none";-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 <script>
-    // Находим все элементы с классом "folder"
-    var folders = document.querySelectorAll('.folder');
+    function searchTree() {
+        var searchInput = document.getElementById("searchInput");
+        var searchText = searchInput.value.toLowerCase();
+        var equipmentItems = document.querySelectorAll(".cl_equipment");
 
-    // Для каждого элемента устанавливаем обработчик клика
-    for (var i = 0; i < folders.length; i++) {
-        folders[i].addEventListener('click', function() {
-            // Находим родительский элемент (li)
-            var parent = this.parentNode;
+        equipmentItems.forEach(function(item) {
+            var itemText = item.textContent.toLowerCase();
+            var parentList = item.nextElementSibling;
 
-            // Находим все вложенные элементы (ul)
-            var children = parent.querySelectorAll('ul');
-
-            // Переключаем класс "hidden" у каждого вложенного элемента
-            for (var j = 0; j < children.length; j++) {
-                children[j].classList.toggle('hidden');
+            if (itemText.includes(searchText)) {
+                item.style.display = "block";
+                parentList.style.display = "block";
+            } else {
+                item.style.display = "none";
+                parentList.style.display = "none";
             }
         });
     }
-</script>
-
-<style>
-    /* Стили для скрытия вложенных элементов */
-    .hidden {
-        display: none;
+    function toggleList(element) {
+        if (element.style.display === "none") {
+            element.style.display = "block";
+        } else {
+            element.style.display = "none";
+        }
     }
-</style>
+</script>
 
 </body>
 </html>

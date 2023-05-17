@@ -1,7 +1,6 @@
 package belov.vlad.dapp.services;
 
 import belov.vlad.dapp.model.Status;
-import belov.vlad.dapp.security.Role;
 import belov.vlad.dapp.model.User;
 import belov.vlad.dapp.repository.UserRepository;
 import org.slf4j.Logger;
@@ -17,10 +16,14 @@ public class UserServiceImpl implements UserService{
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public User getById(Long id) {
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User create(User user) {
-        user.setStatus(new Status("ACTIVE"));
+        user.setStatus(Status.ACTIVE);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -67,8 +70,9 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public boolean isAdmin(User user) {
-        if(user.getRole().getName() == "admin")
+        if(user.getRole().name() == "admin")
             return true;
-        else return false;
+        else
+            return false;
     }
 }

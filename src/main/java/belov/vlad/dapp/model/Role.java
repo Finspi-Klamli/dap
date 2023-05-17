@@ -1,19 +1,39 @@
 package belov.vlad.dapp.model;
 
+import belov.vlad.dapp.model.Permission;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import lombok.Data;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-import javax.persistence.*;
+public enum Role {
+    USER(Set.of(Permission.USER_PERMISSION)),
+    ADMIN(Set.of(Permission.DEVELOPER_READ,
+            Permission.DEVELOPER_WRITE,
+            Permission.ADMIN_PERMISSION,
+            Permission.USER_PERMISSION,
+            Permission.USER_READ,
+            Permission.USER_UPDATE,
+            Permission.USER_DELETE)),
+    MODERATOR(Set.of(Permission.DEVELOPER_READ,
+            Permission.DEVELOPER_WRITE,
+            Permission.ADMIN_PERMISSION,
+            Permission.USER_CREATE,
+            Permission.USER_READ,
+            Permission.USER_UPDATE,
+            Permission.USER_DELETE));
+    private final Set<Permission> permissions;
+    Role(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
 
-@Entity
-@Data
-@Table(name = "roles")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
 
-    @Column(name = "name")
-    private String name;
-
+    public Set<SimpleGrantedAuthority> getAuthorities(){
+        return getPermissions().stream()
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                .collect(Collectors.toSet());
+    }
 }
