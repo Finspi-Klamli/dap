@@ -20,4 +20,14 @@ public class TechnologicalCardServiceImpl implements TechnologicalCardService {
     public List<TechnologicalCard> findAll() {
         return technologicalCardRepository.findAll();
     }
+    @Override
+    public TechnologicalCard findForConversion(String string){
+        String targetWord = " последняя";
+        int startIndex = string.indexOf(targetWord)-1;
+        String result = string.substring(0, startIndex);
+
+        TechnologicalCard tc = technologicalCardRepository.findAll().stream().filter(t -> t.getName().equals(result))
+                .findFirst().orElse(null);
+        return tc;
+    }
 }

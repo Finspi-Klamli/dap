@@ -1,12 +1,14 @@
 package belov.vlad.dapp.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@EqualsAndHashCode
 @Table(name = "technological_cards")
 public class TechnologicalCard {
     @Id
@@ -32,17 +34,8 @@ public class TechnologicalCard {
             return null;
         return versionTechnologicalCards;
     }
-
-
     @Override
     public String toString() {
-        return "TechnologicalCard{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", lastVersion='" + lastVersion + '\'' +
-                ", product=" + product +
-                ", versionTechnologicalCards=" + versionTechnologicalCards +
-                '}';
+        return  name +  "  последняя версия: " + lastVersion;
     }
 }

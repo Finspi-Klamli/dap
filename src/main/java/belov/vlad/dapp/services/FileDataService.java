@@ -10,5 +10,6 @@ public interface FileDataService {
     public Optional<FileData> getFileById(Long id);
     FileData getFileDataById(Long id);
     public List<FileData> findAll();
-    public void save(FileData fileData);
+//    public Long save(FileData fileData);
+    public Long save(FileData fileData);
 }

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TechnologicalCardService {
     List<TechnologicalCard> findAll();
+    TechnologicalCard findForConversion(String string);
 }

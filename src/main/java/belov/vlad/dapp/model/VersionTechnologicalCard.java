@@ -3,6 +3,7 @@ package belov.vlad.dapp.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +27,11 @@ public class VersionTechnologicalCard {
     List<FavoriteMap> favoriteMaps;
 
     @Column(name = "date_of_creation")
-    private Date dateOfCreation;
+    private LocalDate dateOfCreation;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
@@ -38,6 +40,19 @@ public class VersionTechnologicalCard {
     @OneToOne
     @JoinColumn(name = "file_data_id")
     private FileData fileData;
+
+    public VersionTechnologicalCard(String version, TechnologicalCard technologicalCard, LocalDate dateOfCreation, User user, StatusTechnologicalCard statusTechnologicalCard, FileData fileData) {
+        this.version = version;
+        this.technologicalCard = technologicalCard;
+        this.dateOfCreation = dateOfCreation;
+        this.user = user;
+        this.fileData = fileData;
+        this.statusTechnologicalCard = statusTechnologicalCard;
+    }
+
+    public VersionTechnologicalCard() {
+
+    }
 
     @Override
     public String toString() {

@@ -15,7 +15,8 @@ public interface FileDataRepository extends JpaRepository<FileData, Long> {
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO file_data (data, name) VALUES (:data, :name)", nativeQuery = true)
-    void addFileData(@Param("data") byte[] data, @Param("name") String fileName);
+    Long addFileData(@Param("data") byte[] data, @Param("name") String fileName);
+
 
     @Query(value = "SELECT * FROM file_data", nativeQuery = true)
     List<FileData> getAllFileData();

@@ -1,10 +1,9 @@
 package belov.vlad.dapp.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -13,7 +12,7 @@ public class UserDataChange {
     public UserDataChange(Long id, User user, String fieldName, String oldValue, String newValue) {
         this.id = id;
         this.user = user;
-        this.changeDate = LocalDateTime.now();
+        this.changeDate = LocalDate.now();
         this.fieldName = fieldName;
         this.oldValue = oldValue;
         this.newValue = newValue;
@@ -28,7 +27,7 @@ public class UserDataChange {
     private User user;
 
     @Column(name = "change_date", nullable = false)
-    private LocalDateTime changeDate;
+    private LocalDate changeDate;
 
     @Column(name = "field_name", nullable = false)
     private String fieldName;
@@ -40,6 +39,6 @@ public class UserDataChange {
     private String newValue;
 
     public UserDataChange() {
-        this.changeDate = LocalDateTime.now();
+        this.changeDate = LocalDate.now();
     }
 }

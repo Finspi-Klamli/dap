@@ -24,4 +24,10 @@ public class FileData {
     @OneToOne(mappedBy = "fileData")
     private VersionTechnologicalCard versionTechnologicalCard;
 
+    @Override
+    public String toString() {
+        return "FileData{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

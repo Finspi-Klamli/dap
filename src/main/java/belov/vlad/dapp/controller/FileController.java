@@ -34,22 +34,6 @@ public class FileController {
         //model.addAttribute("pdfFiles", fileDataService.findAll());
         return "pdf";
     }
-
-    @PostMapping("/pdf/upload")
-    public String uploadPdfFile(@RequestParam("file") MultipartFile file,
-                                RedirectAttributes redirectAttributes) {
-        try {
-            FileData pdfFile = new FileData();
-            pdfFile.setName(file.getOriginalFilename());
-            pdfFile.setData(file.getBytes());
-              fileDataService.save(pdfFile);
-            redirectAttributes.addFlashAttribute("successMessage", "Файл успешно загружен");
-        } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Ошибка загрузки файла");
-        }
-        return "redirect:/pdf";
-    }
-
     @GetMapping("/pdf/{id}/{version}")
     public void downloadPdf(HttpServletResponse response, @PathVariable("id") Long id,
                             @PathVariable("version") String version) throws IOException {

@@ -6,9 +6,15 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,17 +22,23 @@ import java.util.List;
 
 //@PreAuthorize("hasAuthority('admin') or hasAuthority('user')")
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final EquipmentService equipmentService;
     private final VersionTechnologicalCardService versionTechnologicalCardService;
     private final FavoriteMapsService favoriteMapsService;
+    private final FileDataService fileDataService;
+    private final TechnologicalCardService technologicalCardService;
+    private final ApplicationOfTechnologicalMapService applicationOfTechnologicalMapService;
 
     public UserController(UserServiceImpl userService, EquipmentService equipmentService,
-                          VersionTechnologicalCardService versionTechnologicalCardService, FavoriteMapsService favoriteMapsService) {
+                          VersionTechnologicalCardService versionTechnologicalCardService, FavoriteMapsService favoriteMapsService, FileDataService fileDataService, TechnologicalCardService technologicalCardService, ApplicationOfTechnologicalMapService applicationOfTechnologicalMapService) {
         this.userService = userService;
         this.equipmentService = equipmentService;
         this.versionTechnologicalCardService = versionTechnologicalCardService;
         this.favoriteMapsService = favoriteMapsService;
+        this.fileDataService = fileDataService;
+        this.technologicalCardService = technologicalCardService;
+        this.applicationOfTechnologicalMapService = applicationOfTechnologicalMapService;
     }
 
     @GetMapping()
@@ -125,8 +137,38 @@ public class UserController {
         return "favorite-maps";
     }
     @GetMapping("/technological-maps/submit-card-for-approval")
-    public String getSubmitCardForApprovalPage(){
-
+    public String getSubmitCardForApprovalPage(Model model){
+        ApplicationOfTechnologicalMap applicationOfTechnologicalMap = new ApplicationOfTechnologicalMap();
+        model.addAttribute("technologicalCards", technologicalCardService.findAll());
+        model.addAttribute("applicationOfTechnologicalMap",applicationOfTechnologicalMap);
         return "submit-card-for-approval";
     }
-}
+    @PostMapping("/technological-maps/submit-card-for-approval/create")
+    public String createApplication( @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails currentUser, @ModelAttribute("applicationOfTechnologicalMap")
+    @Valid ApplicationOfTechnologicalMap applicationOfTechnologicalMap, BindingResult bindingResult){
+        if (bindingResult.hasErrors())
+            return "submit-card-for-approval";
+        Long pdfId = null;
+        try {
+            FileData pdfFile = new FileData();
+            pdfFile.setName(file.getOriginalFilename());
+            pdfFile.setData(file.getBytes());
+            pdfId = fileDataService.save(pdfFile);
+            redirectAttributes.addFlashAttribute("successMessage", "Файл успешно загружен");
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Ошибка загрузки файла");
+        }
+
+        LocalDate localDate = LocalDate.now();
+        User user = userService.findByEmail(currentUser.getUsername());
+        applicationOfTechnologicalMap.setUser(user);
+        VersionTechnologicalCard versionTechnologicalCard = new VersionTechnologicalCard(applicationOfTechnologicalMap.getVersion(),
+                        applicationOfTechnologicalMap.getTechnologicalCard(), localDate, user, StatusTechnologicalCard.AWAITING_CONFIRMATION, fileDataService.getFileById(pdfId).get());
+        versionTechnologicalCardService.save(versionTechnologicalCard);
+        applicationOfTechnologicalMap.setVersionTechnologicalCard(versionTechnologicalCard);
+        applicationOfTechnologicalMap.setStatus(ApplicationStatus.AWAITING_CONFIRMATION);
+        applicationOfTechnologicalMap.setDateOfCreation(localDate);
+        applicationOfTechnologicalMapService.save(applicationOfTechnologicalMap);
+        return "redirect:/technological-maps/submit-card-for-approval";
+    }
+ }

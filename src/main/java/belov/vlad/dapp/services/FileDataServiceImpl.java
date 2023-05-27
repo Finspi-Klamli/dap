@@ -31,8 +31,10 @@ public class FileDataServiceImpl implements FileDataService{
 
     @Override
     public Optional<FileData> getFileById(Long id) {
+
         return fileDataRepository.findById(id);
     }
+//    Подробности: Ошибочная строка содержит (11, 1.1.112, null, 2023-05-28, 1, 4, AWAITING_CONFIRMATION).
 
 //    @Override
 //    public FileData getFileDataById(Long id) {
@@ -44,11 +46,17 @@ public class FileDataServiceImpl implements FileDataService{
     public List<FileData> findAll() {
         return fileDataRepository.findAll();
     }
+    public Long save(FileData fileData) {
+        FileData savedFileData = fileDataRepository.save(fileData);
+        return savedFileData.getId();
+    }
+//    @Override
+//    public Long save(FileData fileData) {
+//        fileDataRepository.addFileData(fileData.getData(), fileData.getName());
+//        return fileData.getId();
+//    }
 
     @Override
-    public void save(FileData fileData) {
-        fileDataRepository.addFileData(fileData.getData(), fileData.getName());
-    }
     public FileData getFileDataById(Long id) {
         return fileDataRepository.findById(id).orElse(null);
     }

@@ -8,6 +8,31 @@
 </head>
 <body>
 <div th:replace="pages/home/header :: header"/>
+<div>
+    <form class="container-edit" th:method="POST", th:action="@{/technological-maps/submit-card-for-approval/create}" enctype="multipart/form-data" th:object="${applicationOfTechnologicalMap}">
+        <h2>Заполните заявку на добавления новой технологической кары</h2>
 
+        <label for="technologicalCard">Выберите карту</label>
+        <select th:field="*{technologicalCard}" id="technologicalCard">
+            <option th:each="technologicalCard : ${technologicalCards}"
+                    th:value="${technologicalCard}" th:text="${technologicalCard}">
+            </option>
+        </select>
+        <label for="version">Введите версию карты</label>
+        <input type="text" th:field="*{version}" id ="version"/>
+        <div style="color:red" th:if="${#fields.hasErrors('version')}" th:errors="*{version}"></div>
+
+        <label for="comment">Введите комментарий к карте</label>
+        <textarea type="text" th:field="*{comment}" id ="comment"/>
+        <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
+
+        <h2>Загрузить новый PDF-файл</h2>
+    <!--    <form th:action="@{/pdf/upload}" method="post" enctype="multipart/form-data">-->
+            <input type="file" name="file" accept=".pdf">
+            <input type="submit" value="Загрузить">
+    <!--    </form>-->
+        <input type="submit" value="Создать заявку">
+    </form>
+</div>
 </body>
 </html>
