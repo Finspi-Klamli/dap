@@ -23,8 +23,8 @@ public class Product {
     @JoinColumn(name = "manufacturing_process_id", nullable = false)
     private ManufacturingProcess manufacturingProcess;
 
-    @OneToMany(mappedBy = "product")
-    private List<TechnologicalCard> technologicalCard;
+    @OneToOne(mappedBy = "product")
+    private TechnologicalCard technologicalCard;
 
     @Override
     public String toString() {

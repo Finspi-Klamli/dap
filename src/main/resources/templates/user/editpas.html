@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
 <head>
     <title>Профиль пользователя</title>
     <link rel="stylesheet" th:href="@{/css/editpas.css}"/>
@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 mx-auto">
-            <form class="change-password-form" th:action="@{/profile/change-password}" th:method="PATCH">
+            <form class="change-password-form" th:action="@{/profile/update-password}" th:method="PATCH">
                 <h2>Изменение пароля</h2>
                 <div class="form-group">
                     <label for="currentPassword">Текущий пароль:</label>

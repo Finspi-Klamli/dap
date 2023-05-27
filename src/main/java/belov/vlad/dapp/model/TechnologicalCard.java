@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "technological_cards")
 @Data
+@Table(name = "technological_cards")
 public class TechnologicalCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +22,29 @@ public class TechnologicalCard {
     @Column(name = "last_version")
     private String lastVersion;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToMany
-    @JoinColumn(name = "technologicalCards", nullable = false)
-    private List<VersionTechnologicalCard> versionTechnologicalCard;
 
+    @OneToMany(mappedBy = "technologicalCard")
+    private List<VersionTechnologicalCard> versionTechnologicalCards;
+    public List<VersionTechnologicalCard> getVersionTechnologicalCards() {
+        if(versionTechnologicalCards == null)
+            return null;
+        return versionTechnologicalCards;
+    }
+
+
+    @Override
+    public String toString() {
+        return "TechnologicalCard{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", lastVersion='" + lastVersion + '\'' +
+                ", product=" + product +
+                ", versionTechnologicalCards=" + versionTechnologicalCards +
+                '}';
+    }
 }

@@ -6,16 +6,7 @@
 </head>
 <body>
 <h1>Список PDF-файлов</h1>
-<table>
-  <tr>
-    <th>ID</th>
-    <th>Имя файла</th>
-  </tr>
-  <tr th:each="pdfFile : ${pdfFiles}">
-    <td th:text="${pdfFile.id}"></td>
-    <td th:text="${pdfFile.getName()}"></td>
-  </tr>
-</table>
+
 <h2>Загрузить новый PDF-файл</h2>
 <form th:action="@{/pdf/upload}" method="post" enctype="multipart/form-data">
   <input type="file" name="file" accept=".pdf">

@@ -5,6 +5,9 @@ import belov.vlad.dapp.repository.FileDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,7 +15,8 @@ import java.util.Optional;
 public class FileDataServiceImpl implements FileDataService{
     @Autowired
     private final FileDataRepository fileDataRepository;
-
+    @PersistenceContext
+    private EntityManager entityManager;
     public FileDataServiceImpl(FileDataRepository fileDataRepository) {
         this.fileDataRepository = fileDataRepository;
     }
@@ -30,12 +34,22 @@ public class FileDataServiceImpl implements FileDataService{
         return fileDataRepository.findById(id);
     }
 
+//    @Override
+//    public FileData getFileDataById(Long id) {
+//        String nativeQuery = "SELECT * FROM file_data WHERE id = 4 ";
+//        Query query = entityManager.createNativeQuery(nativeQuery, FileData.class);
+//        return (FileData) query.getSingleResult();
+//    }
+
     public List<FileData> findAll() {
         return fileDataRepository.findAll();
     }
 
     @Override
     public void save(FileData fileData) {
-        fileDataRepository.save(fileData);
+        fileDataRepository.addFileData(fileData.getData(), fileData.getName());
+    }
+    public FileData getFileDataById(Long id) {
+        return fileDataRepository.findById(id).orElse(null);
     }
 }

@@ -12,7 +12,7 @@
         }
         .container {
             overflow: auto;
-            width: 750px;
+            width: 800px;
             height: 500px;
             margin: 0 auto;
             padding: 20px;
@@ -30,7 +30,7 @@
 <div class="main-body">
     <div class="container">
         <input style="margin: 10px;" type="text" id="searchInput" placeholder="Поиск..." oninput="searchTree()">
-        <a th:href="@{/technological-maps/documentation}">Предыдущие версии техн. карт</a>
+        <a th:href="@{/technological-maps/documentation}">Актуальные версии техн. карт</a>
         <ul id="treeList">
             <li th:each="equipment : ${equipments}">
                 <span th:text="${equipment.getName()}" onclick="toggleList(this)"></span>
@@ -42,15 +42,20 @@
                                 <span th:text="${product.getName()}" onclick="toggleList(this)"></span>
                                 <ul style="display: none;">
                                     <li th:each="technologicalCard : ${product.getTechnologicalCard()}">
-                                        <span th:text="${technologicalCard.getName()} + ' версия ' + ${technologicalCard.getLastVersion()}" onclick="toggleList(this)"></span>
-                                        <div>
-                                        <a th:href="@{/pdf/{cardId}/{cardVersion}(cardId=${technologicalCard.getId()}, cardVersion = ${technologicalCard.getLastVersion()})}">Открыть</a>
-                                            <form th:action="@{/technological-maps/add}" method="post">
-                                                <input type="hidden" name="card_id" th:value="${technologicalCard.getId()}" />
-                                                <input type="hidden" name="card_version" th:value="${technologicalCard.getLastVersion()}" />
-                                                <button type="submit">Добавить в избранное</button>
-                                            </form>
-                                        </div>
+                                        <span th:text="${technologicalCard.getName()}" onclick="toggleList(this)"></span>
+                                            <ul style="display: none;">
+                                                <li th:each="versionTechnologicalCards : ${technologicalCard.getVersionTechnologicalCards()}">
+                                                    <span th:text="${versionTechnologicalCards.getTechnologicalCard().getName()} + ' версия '+${versionTechnologicalCards.getVersion()}" onclick="toggleList(this)"></span>
+                                                    <div>
+                                                        <a th:href="@{/pdf/{cardId}/{cardVersion}(cardId=${versionTechnologicalCards.getTechnologicalCard().getId()}, cardVersion = ${versionTechnologicalCards.getVersion()})}">Открыть</a>
+                                                        <form th:action="@{/technological-maps/add}" method="post">
+                                                            <input type="hidden" name="card_id" th:value="${technologicalCard.getId()}" />
+                                                            <input type="hidden" name="card_version" th:value="${technologicalCard.getLastVersion()}" />
+                                                            <button type="submit">Добавить в избранное</button>
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                     </li>
                                 </ul>
                             </li>
@@ -63,10 +68,6 @@
 </div>
 
 <script>
-function disableLink(link) {
-    // link.removeAttribute("href");
-    console.log('Добавлено в избранное');
-}
     function searchTree() {
         var searchInput = document.getElementById("searchInput");
         var searchText = searchInput.value.toLowerCase();

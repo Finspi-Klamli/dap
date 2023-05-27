@@ -15,11 +15,11 @@ public enum Role {
             Permission.USER_READ,
             Permission.USER_UPDATE,
             Permission.USER_DELETE)),
-    MODERATOR(Set.of(Permission.DEVELOPER_READ,
+    APPLICANT(Set.of(Permission.DEVELOPER_READ,
             Permission.DEVELOPER_WRITE,
             Permission.ADMIN_PERMISSION,
             Permission.USER_CREATE,
-            Permission.USER_READ,
+            Permission.USER_PERMISSION,
             Permission.USER_UPDATE,
             Permission.USER_DELETE));
     private final Set<Permission> permissions;

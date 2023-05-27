@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface FileDataService {
     public FileData saveFile(String fileName, byte[] fileData);
     public Optional<FileData> getFileById(Long id);
-
+    FileData getFileDataById(Long id);
     public List<FileData> findAll();
     public void save(FileData fileData);
 }

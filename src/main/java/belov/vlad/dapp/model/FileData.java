@@ -1,9 +1,9 @@
 package belov.vlad.dapp.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.math.BigInteger;
 
 @Entity
 @Data
@@ -15,12 +15,13 @@ public class FileData {
 
     @Lob
     @Column(name = "data", columnDefinition = "bytea")
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] data;
 
     @Column(name = "name")
     private String name;
 
-    public void setDataFromBigInteger(BigInteger value) {
-        this.data = value.toByteArray();
-    }
+    @OneToOne(mappedBy = "fileData")
+    private VersionTechnologicalCard versionTechnologicalCard;
+
 }

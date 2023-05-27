@@ -19,7 +19,7 @@ public class VersionTechnologicalCard {
 
     @ManyToOne
     @JoinColumn(name = "technological_cards_id", nullable = false)
-    private TechnologicalCard technologicalCards;
+    private TechnologicalCard technologicalCard;
 
     @Column(name = "date_of_creation")
     private Date dateOfCreation;
@@ -30,8 +30,13 @@ public class VersionTechnologicalCard {
     @Column(name = "status_id")
     private Long statusId;
 
-    @Lob
-    @Column(name = "file")
-    private byte[] file;
+    @OneToOne
+    @JoinColumn(name = "file_data_id")
+    private FileData fileData;
 
+    @Override
+    public String toString() {
+        return "VersionTechnologicalCard{" +
+                "version='" + version +'}';
+    }
 }

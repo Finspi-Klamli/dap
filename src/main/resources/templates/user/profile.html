@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
 <head>
     <title>Профиль пользователя</title>
     <link rel="stylesheet" th:href="@{/css/profile.css}"/>
@@ -23,8 +23,8 @@
             <label for="role">Роль:</label>
             <input type="text" id="role" name="role" th:value="${user.getRole()}" readonly="readonly">
             <div class="links">
-                <a class="button" th:href="@{/profile/edit}">Изменить информацию</a>
-                <a class="button" th:href="@{/profile/change-password}">Изменить пароль</a>
+                <a class="button" th:href="@{/profile/update}">Изменить информацию</a>
+                <a class="button" th:href="@{/profile/update-password}">Изменить пароль</a>
             </div>
         </form>
     </div>
