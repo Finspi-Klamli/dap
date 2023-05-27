@@ -1,17 +1,11 @@
 .container {
-    background-color: #DCDCDC;
     height: calc(100vh - 60px);
     padding: 0;
-    margin-right: -7px;
-    margin-left: -7px;
-    margin-bottom: -7px;
-    margin-top: -7px;
+    margin-top: -50px;
     padding: 100px;
 }
 
 .login-form {
-    margin-top: 100px;
-    margin-bottom: 50px;
     max-width: 500px;
     margin: 0 auto;
     background-color: #fff;
@@ -36,7 +30,8 @@
 
 .login-form button[type="submit"] {
     width: 100%;
-    background-color: #5C6464;
+    height: 50px;
+    background-color: black;
     color: #fff;
     border: none;
     padding: 10px;

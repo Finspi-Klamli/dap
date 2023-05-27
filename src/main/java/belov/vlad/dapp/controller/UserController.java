@@ -1,19 +1,15 @@
 package belov.vlad.dapp.controller;
 
-import belov.vlad.dapp.config.SecurityUtils;
 import belov.vlad.dapp.model.*;
 import belov.vlad.dapp.services.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -21,17 +17,16 @@ import java.util.List;
 //@PreAuthorize("hasAuthority('admin') or hasAuthority('user')")
 public class UserController {
     private final UserServiceImpl userService;
-    private final UserDataChangeServiceImpl userDataChangeService;
     private final EquipmentService equipmentService;
-    private final ManufacturingProcessService manufacturingProcessService;
-    private final ProductsService productsService;
+    private final VersionTechnologicalCardService versionTechnologicalCardService;
+    private final FavoriteMapsService favoriteMapsService;
 
-    public UserController(UserServiceImpl userService, UserDataChangeServiceImpl userDataChangeService, EquipmentService equipmentService, ManufacturingProcessService manufacturingProcessService, ProductsService productsService) {
+    public UserController(UserServiceImpl userService, EquipmentService equipmentService,
+                          VersionTechnologicalCardService versionTechnologicalCardService, FavoriteMapsService favoriteMapsService) {
         this.userService = userService;
-        this.userDataChangeService = userDataChangeService;
         this.equipmentService = equipmentService;
-        this.manufacturingProcessService = manufacturingProcessService;
-        this.productsService = productsService;
+        this.versionTechnologicalCardService = versionTechnologicalCardService;
+        this.favoriteMapsService = favoriteMapsService;
     }
 
     @GetMapping()
@@ -105,16 +100,33 @@ public class UserController {
         return "technological-maps";
     }
     @PostMapping ("/technological-maps/add")
-    public String getPage(HttpServletRequest request, @RequestParam("card_id") Long id, @RequestParam("card_version") String card_version) {
+    public String addToFavorite(@AuthenticationPrincipal UserDetails currentUser, HttpServletRequest request, @RequestParam("card_id") Long card_id, @RequestParam("card_version") String card_version) {
         String referer = request.getHeader("Referer");
-        //добавить в любимое
+        User user = userService.findByEmail(currentUser.getUsername());
+        VersionTechnologicalCard versionTechnologicalCard = versionTechnologicalCardService
+                .findByVersionAndTechnologicalCards(card_id, card_version);
+        favoriteMapsService.create(user, versionTechnologicalCard);
         return "redirect:" + referer;
     }
     @GetMapping("/technological-maps/documentation")
-    public String getThechnicalCardsDocumentation(Model model){
+    public String getTechnologicalMapsDocumentation(Model model){
         List<Equipment> equipments = equipmentService.findAll();
         model.addAttribute("equipments", equipments);
         return "documentation";
     }
+    @GetMapping("/technological-maps/favorites")
+    public String getFavoriteMapsPage(@AuthenticationPrincipal UserDetails currentUser, Model model){
+        List<FavoriteMap> favoriteMaps = favoriteMapsService.findByUserEmail(currentUser.getUsername());
+        List<VersionTechnologicalCard> versionTechnologicalCards = new ArrayList<>();
+        for (FavoriteMap fm : favoriteMaps){
+            versionTechnologicalCards.add(fm.getVersionTechnologicalCard());
+        }
+        model.addAttribute("maps", versionTechnologicalCards);
+        return "favorite-maps";
+    }
+    @GetMapping("/technological-maps/submit-card-for-approval")
+    public String getSubmitCardForApprovalPage(){
 
+        return "submit-card-for-approval";
+    }
 }

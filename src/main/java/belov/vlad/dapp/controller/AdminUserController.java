@@ -16,7 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin/users")
-@PreAuthorize("hasAuthority('user')")
+@PreAuthorize("hasAuthority('admin')")
 public class AdminUserController {
     private final UserServiceImpl userService;
     private final UserDataChangeServiceImpl userDataChangeService;

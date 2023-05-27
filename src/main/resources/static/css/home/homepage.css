@@ -5,6 +5,10 @@
     font-size: 18px;
     font-weight: 400;
 }
+.footer-bar {
+    background-color: #DCDCDC;
+    height: 2px;
+}
 .navbar-dark .navbar-nav .nav-link {
     color:#5C6464;
 }

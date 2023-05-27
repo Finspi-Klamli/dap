@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,14 +22,18 @@ public class VersionTechnologicalCard {
     @JoinColumn(name = "technological_cards_id", nullable = false)
     private TechnologicalCard technologicalCard;
 
+    @OneToMany(mappedBy = "versionTechnologicalCard")
+    List<FavoriteMap> favoriteMaps;
+
     @Column(name = "date_of_creation")
     private Date dateOfCreation;
 
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "status_id")
-    private Long statusId;
+    @Column(name = "status")
+    @Enumerated(value = EnumType.STRING)
+    private StatusTechnologicalCard statusTechnologicalCard;
 
     @OneToOne
     @JoinColumn(name = "file_data_id")

@@ -8,20 +8,12 @@ import java.util.stream.Collectors;
 
 public enum Role {
     USER(Set.of(Permission.USER_PERMISSION)),
-    ADMIN(Set.of(Permission.DEVELOPER_READ,
-            Permission.DEVELOPER_WRITE,
+    ADMIN(Set.of(Permission.APPLICANT_PERMISSION,
             Permission.ADMIN_PERMISSION,
-            Permission.USER_PERMISSION,
-            Permission.USER_READ,
-            Permission.USER_UPDATE,
-            Permission.USER_DELETE)),
-    APPLICANT(Set.of(Permission.DEVELOPER_READ,
-            Permission.DEVELOPER_WRITE,
-            Permission.ADMIN_PERMISSION,
-            Permission.USER_CREATE,
-            Permission.USER_PERMISSION,
-            Permission.USER_UPDATE,
-            Permission.USER_DELETE));
+            Permission.USER_PERMISSION
+            )),
+    APPLICANT(Set.of(Permission.APPLICANT_PERMISSION,
+            Permission.USER_PERMISSION));
     private final Set<Permission> permissions;
     Role(Set<Permission> permissions) {
         this.permissions = permissions;

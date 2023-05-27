@@ -45,12 +45,13 @@
                                         <span th:text="${technologicalCard.getName()}" onclick="toggleList(this)"></span>
                                             <ul style="display: none;">
                                                 <li th:each="versionTechnologicalCards : ${technologicalCard.getVersionTechnologicalCards()}">
-                                                    <span th:text="${versionTechnologicalCards.getTechnologicalCard().getName()} + ' версия '+${versionTechnologicalCards.getVersion()}" onclick="toggleList(this)"></span>
+                                                    <span th:text="${versionTechnologicalCards.getTechnologicalCard().getName()} + ' версия '+${versionTechnologicalCards.getVersion()} +
+                                                    ' статус ' + ${versionTechnologicalCards.getStatusTechnologicalCard().getName()}" onclick="toggleList(this)"></span>
                                                     <div>
                                                         <a th:href="@{/pdf/{cardId}/{cardVersion}(cardId=${versionTechnologicalCards.getTechnologicalCard().getId()}, cardVersion = ${versionTechnologicalCards.getVersion()})}">Открыть</a>
                                                         <form th:action="@{/technological-maps/add}" method="post">
                                                             <input type="hidden" name="card_id" th:value="${technologicalCard.getId()}" />
-                                                            <input type="hidden" name="card_version" th:value="${technologicalCard.getLastVersion()}" />
+                                                            <input type="hidden" name="card_version" th:value="${versionTechnologicalCards.getVersion()}" />
                                                             <button type="submit">Добавить в избранное</button>
                                                         </form>
                                                     </div>

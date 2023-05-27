@@ -1,17 +1,21 @@
 package belov.vlad.dapp.model;
-import lombok.Data;
 
-import javax.persistence.*;
-import java.util.List;
+public enum StatusTechnologicalCard {
+    ACTIVE("Активная"),
+    OBSOLETE("Устаревшая"),
+    AWAITING_CONFIRMATION("Ожидает подтверждения");
 
-@Entity
-@Data
-@Table(name = "products")
-public class StatusTechnologicalCard {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public String getName() {
+        return name;
+    }
 
-    @Column(name = "name")
+    public void setName(String name) {
+        this.name = name;
+    }
+
     private String name;
+
+    StatusTechnologicalCard(String name) {
+        this.name = name;
+    }
 }

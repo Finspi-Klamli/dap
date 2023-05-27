@@ -7,15 +7,10 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWt0Q1T38CV9gQLZMwwDO8fEm5NcZuUCTX" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/login.css}"/>
 
+    <div th:replace="pages/home/header :: header-css"/>
 </head>
 <body>
-<div class="header">
-    <nav class="navbar navbar-expand navbar-dark navbar-fixed-top" >
-        <a class="navbar-brand"  href="/">
-            <img src="/logo.png" height="60" alt="logo" style="padding: 0;">
-        </a>
-    </nav>
-</div>
+<div th:replace="pages/home/header :: header"/>
 
 <div class="container">
     <div class="row">

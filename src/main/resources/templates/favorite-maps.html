@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWt0Q1T38CV9gQLZMwwDO8fEm5NcZuUCTX" crossorigin="anonymous">
+  <link rel="stylesheet" th:href="@{/css/favorite-maps.css}"/>
+  <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+  <div class="container">
+      <input type="text" id="searchInput" placeholder="Поиск...">
+      <ul id="list">
+        <li  th:each = "map : ${maps}">
+            <div>
+                <span th:text="${map.getTechnologicalCard().getName()} + ' версия' + ${map.getVersion()}"></span>
+                <a th:href="@{/pdf/{mapId}/{mapVersion}(mapId=${map.getTechnologicalCard().getId()},
+                mapVersion=${map.getVersion()})}">Открыть</a>
+            </div>
+        </li>
+      </ul>
+  </div>
+<script>
+    document.getElementById('searchInput').addEventListener('input', function() {
+        var searchValue = this.value.toLowerCase();
+        var listItems = document.querySelectorAll('#list li');
+
+        for (var i = 0; i < listItems.length; i++) {
+            var listItem = listItems[i];
+            var listItemText = listItem.textContent.toLowerCase();
+
+            if (listItemText.includes(searchValue)) {
+                listItem.style.display = 'block';
+            } else {
+                listItem.style.display = 'none';
+            }
+        }
+    });
+</script>
+</body>
+</html>

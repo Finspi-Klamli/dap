@@ -27,14 +27,26 @@ public class SecurityUtils {
         if (authentication == null || !authentication.isAuthenticated()) {
             return false;
         }
-
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;
             return userDetails.getAuthorities().stream()
                     .anyMatch(authority -> authority.getAuthority().equals("user"));
         }
+        return false;
+    }
+    public static boolean isApplicant(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
 
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            return userDetails.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("applicant"));
+        }
         return false;
     }
 }

@@ -1,14 +1,17 @@
 package belov.vlad.dapp.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "users")
 public class User {
     @Id
@@ -41,6 +44,9 @@ public class User {
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
     private Status status;
+
+    @OneToMany(mappedBy = "user")
+    private List<FavoriteMap> favoriteMaps;
 
     public void changeFields(User newFieldsUser){
         this.email = newFieldsUser.getEmail();
