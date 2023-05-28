@@ -1,0 +1,38 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+}
+input[type="text"] {
+    margin: 0px;
+    height: 45px;
+    border-radius: 5px;
+    border: 2px solid;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.back-link{
+    text-align: center;
+    display: inline-block;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 10px;
+    margin: 10px;
+    width: 230px;
+}
+.back-link:hover{
+    background-color: darkgrey;
+    color: white;
+    text-decoration: none;
+}

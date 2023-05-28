@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заявки</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWt0Q1T38CV9gQLZMwwDO8fEm5NcZuUCTX" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/applications.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+    </head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<div class="container">
+    <div class="horizontal-container">
+        <input type="text" id="searchInput" placeholder="Поиск..." />
+        <a class="back-link" href="/technological-maps/submit-card-for-approval">Назад</a>
+    </div>
+    <table id="dataTable">
+         <thead>
+         <tr>
+             <th>Название технологической карты</th>
+             <th>Версия      </th>
+             <th>Статус     </th>
+             <th>Дата создания   </th>
+             <th>Ваш комментарий  </th>
+             <th>Комментарий  администратора</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr th:each="applicationOfTechnologicalMap : ${applicationOfTechnologicalMaps}">
+             <td th:text="${applicationOfTechnologicalMap.getVersionTechnologicalCard().getTechnologicalCard().getName()}"></td>
+             <td th:text="${applicationOfTechnologicalMap.getVersion()}"></td>
+             <td th:text="${applicationOfTechnologicalMap.getStatus().getName()}"></td>
+             <td th:text="${applicationOfTechnologicalMap.getDateOfCreation()}"></td>
+             <td th:text="${applicationOfTechnologicalMap.getComment()}"></td>
+             <td th:text="${applicationOfTechnologicalMap.getAdminComment()}"></td>
+
+         </tbody>
+     </table>
+</div>
+<script src="/js/users.js"></script>
+</body>
+</html>

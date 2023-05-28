@@ -5,34 +5,110 @@
     <title>Title</title>
 <!--    <link rel="stylesheet" th:href="@{/css/favorite-maps.css}"/>-->
     <div th:replace="pages/home/header :: header-css"/>
+    <style>
+        .container{
+            margin-top: 50px !important;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .applications-link{
+            text-align: center;
+            display: inline-block;
+            background-color: black;
+            border: 3px solid black;
+            border-radius: 3px;
+            color: white;
+            margin-bottom: 20px;
+            font-size: 16px;
+            padding: 10px;
+            width: 230px;
+            margin-left: 10px;
+        }
+        .applications-link:hover{
+            background-color: darkgrey;
+            color: white;
+            text-decoration: none;
+        }
+
+        .div-block{
+            display:grid;
+            padding:10px;
+        }
+        label{
+            padding:0px;
+
+            font-weight:bold;
+            font-size:16px
+        }
+        textarea{
+            height:100px;
+            width: 500px;
+        }
+        .version{
+            width:200px;
+        }
+        .file-input {
+            width: 170px;
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #000;
+            border: 3px solid black;
+            border-radius: 4px;
+        }
+
+        .file-input:hover {
+            background-color: darkgrey;
+            color: white;
+            text-decoration: none;        }
+
+        .file-input input[type="file"] {
+            display: none;
+        }
+        h2{
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="pages/home/header :: header"/>
-<div>
-    <form class="container-edit" th:method="POST", th:action="@{/technological-maps/submit-card-for-approval/create}" enctype="multipart/form-data" th:object="${applicationOfTechnologicalMap}">
-        <h2>Заполните заявку на добавления новой технологической кары</h2>
-
+<div class="container">
+    <div>
+    <a class="applications-link" th:href="@{/technological-maps/submit-card-for-approval/applications}">Посмотреть заявки</a>
+    <form class="container-edit" th:method="POST", th:action="@{/technological-maps/submit-card-for-approval}" enctype="multipart/form-data" th:object="${applicationOfTechnologicalMap}">
+        <h2>Заполните заявку на добавления технологической кары</h2>
+    <div class = "div-block">
         <label for="technologicalCard">Выберите карту</label>
         <select th:field="*{technologicalCard}" id="technologicalCard">
             <option th:each="technologicalCard : ${technologicalCards}"
                     th:value="${technologicalCard}" th:text="${technologicalCard}">
             </option>
         </select>
+    </div>
+    <div class = "div-block">
         <label for="version">Введите версию карты</label>
-        <input type="text" th:field="*{version}" id ="version"/>
+        <input class="version" type="text" th:field="*{version}" id ="version"/>
         <div style="color:red" th:if="${#fields.hasErrors('version')}" th:errors="*{version}"></div>
-
+    </div>
+    <div class = "div-block">
         <label for="comment">Введите комментарий к карте</label>
         <textarea type="text" th:field="*{comment}" id ="comment"/>
         <div style="color:red" th:if="${#fields.hasErrors('comment')}" th:errors="*{comment}"></div>
-
+    </div>
+    <div class = "div-block">
         <h2>Загрузить новый PDF-файл</h2>
-    <!--    <form th:action="@{/pdf/upload}" method="post" enctype="multipart/form-data">-->
+        <label class="file-input">
+            <span>Выберите файл</span>
             <input type="file" name="file" accept=".pdf">
-            <input type="submit" value="Загрузить">
-    <!--    </form>-->
-        <input type="submit" value="Создать заявку">
+        </label>
+    </div>
+    <input class = "applications-link" type="submit" value="Создать заявку">
     </form>
+    </div>
 </div>
 </body>
 </html>

@@ -139,24 +139,38 @@ public class UserController {
     @GetMapping("/technological-maps/submit-card-for-approval")
     public String getSubmitCardForApprovalPage(Model model){
         ApplicationOfTechnologicalMap applicationOfTechnologicalMap = new ApplicationOfTechnologicalMap();
+        System.out.println(technologicalCardService.findAll());
+        System.out.println("SDASDASDASDSADASDASDASD");
         model.addAttribute("technologicalCards", technologicalCardService.findAll());
         model.addAttribute("applicationOfTechnologicalMap",applicationOfTechnologicalMap);
         return "submit-card-for-approval";
     }
-    @PostMapping("/technological-maps/submit-card-for-approval/create")
-    public String createApplication( @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails currentUser, @ModelAttribute("applicationOfTechnologicalMap")
-    @Valid ApplicationOfTechnologicalMap applicationOfTechnologicalMap, BindingResult bindingResult){
-        if (bindingResult.hasErrors())
+
+    @GetMapping("/technological-maps/submit-card-for-approval/applications")
+    public String getApplicationsPage(@AuthenticationPrincipal UserDetails currentuser, Model model){
+        model.addAttribute("applicationOfTechnologicalMaps", applicationOfTechnologicalMapService
+                .findByUserId(userService.findByEmail(currentuser.getUsername()).getId()));
+        return "applications";
+    }
+
+    @PostMapping("/technological-maps/submit-card-for-approval")
+    public String createApplication( @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes, @AuthenticationPrincipal UserDetails currentUser, Model model,
+                                     @ModelAttribute("applicationOfTechnologicalMap")@Valid ApplicationOfTechnologicalMap applicationOfTechnologicalMap, BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("technologicalCards", technologicalCardService.findAll());
+            System.out.println("dsadasd");
             return "submit-card-for-approval";
+//                return "admin/users/new";
+        }
         Long pdfId = null;
         try {
             FileData pdfFile = new FileData();
             pdfFile.setName(file.getOriginalFilename());
             pdfFile.setData(file.getBytes());
             pdfId = fileDataService.save(pdfFile);
-            redirectAttributes.addFlashAttribute("successMessage", "Файл успешно загружен");
+            redirectAttributes.addAttribute("successMessage", "Файл успешно загружен");
         } catch (IOException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Ошибка загрузки файла");
+            redirectAttributes.addAttribute("errorMessage", "Ошибка загрузки файла");
         }
 
         LocalDate localDate = LocalDate.now();
@@ -169,6 +183,6 @@ public class UserController {
         applicationOfTechnologicalMap.setStatus(ApplicationStatus.AWAITING_CONFIRMATION);
         applicationOfTechnologicalMap.setDateOfCreation(localDate);
         applicationOfTechnologicalMapService.save(applicationOfTechnologicalMap);
-        return "redirect:/technological-maps/submit-card-for-approval";
+        return "redirect:/technological-maps/documentation";
     }
  }

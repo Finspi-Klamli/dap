@@ -18,27 +18,30 @@ public class ApplicationOfTechnologicalMap {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "map_version_id", nullable = false)
+    @JoinColumn(name = "map_version_id")
     private VersionTechnologicalCard versionTechnologicalCard;
 
     @NotEmpty(message = "Поле 'версия' не может быть пустым")
-    @Column(name = "version", nullable = false)
+    @Column(name = "version")
     private String version;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
     private ApplicationStatus status;
 
-    @Column(name = "date_of_creation", nullable = false)
+    @Column(name = "date_of_creation")
     private LocalDate dateOfCreation;
 
     @NotEmpty(message = "Поле 'комментрарий' не может быть пустым")
-    @Column(name = "comment", nullable = false)
+    @Column(name = "comment")
     private String comment;
+
+    @Column(name = "admin_comment")
+    private String adminComment;
 
     @Transient
     public TechnologicalCard technologicalCard;
