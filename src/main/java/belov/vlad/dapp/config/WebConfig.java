@@ -1,5 +1,8 @@
 package belov.vlad.dapp.config;
 
+import belov.vlad.dapp.converter.EquipmentConverter;
+import belov.vlad.dapp.converter.ManufacturingProcessConvertor;
+import belov.vlad.dapp.converter.TechnologicalCardConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

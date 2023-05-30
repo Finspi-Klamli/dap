@@ -16,16 +16,16 @@
         <a class="documentation-link" th:href="@{/technological-maps/documentation}">Предыдущие версии технологических карт</a>
         <ul class="treeviewlist" id="treeList">
             <li th:each="equipment : ${equipments}">
-                <span th:text="${equipment.getName()}" onclick="toggleList(this)"></span>
+                <span th:title="${equipment.getDescription()}" th:text="${equipment.getName()}" onclick="toggleList(this)"></span>
                 <ul style="display: none;">
                     <li th:each="process : ${equipment.getManufacturingProcessList()}">
-                        <span th:text="${process.getName()}" onclick="toggleList(this)"></span>
+                        <span th:title="${process.getDescription()}" th:text="${process.getName()}" onclick="toggleList(this)"></span>
                         <ul style="display: none;">
                             <li th:each="product : ${process.getProducts()}">
-                                <span th:text="${product.getName()}" onclick="toggleList(this)"></span>
+                                <span th:title="${product.getDescription()}" th:text="${product.getName()}" onclick="toggleList(this)"></span>
                                 <ul style="display: none;">
                                     <li th:each="technologicalCard : ${product.getTechnologicalCard()}">
-                                        <span th:text="${technologicalCard.getName()} + ' версия ' + ${technologicalCard.getLastVersion()}" onclick="toggleList(this)"></span>
+                                        <span th:title="${technologicalCard.getDescription()}" th:text="${technologicalCard.getName()} + ' версия ' + ${technologicalCard.getLastVersion()}" onclick="toggleList(this)"></span>
                                         <div class="horizontal-container">
                                         <a style="font-weight: normal!important; color: black;" th:href="@{/pdf/{cardId}/{cardVersion}(cardId=${technologicalCard.getId()}, cardVersion = ${technologicalCard.getLastVersion()})}">Открыть</a>
                                         <form th:action="@{/technological-maps/add}" method="post">
