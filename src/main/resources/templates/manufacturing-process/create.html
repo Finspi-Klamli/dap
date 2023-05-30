@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Новый технологический процесс</title>
+    <link rel="stylesheet" th:href="@{/css/create-update.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<form class="container" th:method="POST", th:action="@{/admin/manufacturing-processes/create}" th:object="${manufacturingProcess}">
+    <h2>Введите данные технологического процесса</h2>
+
+    <label for="name">Введите название технологического процесса</label>
+    <input type="text" th:field="*{name}" id ="name"/>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+    <label for="description">Введите описание технологического процесса</label>
+    <textarea type="text" th:field="*{description}" id ="description"></textarea>
+    <div style="color:red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    <label for="equipment">Выберите оборудование</label>
+    <select th:field="*{equipment}" id="equipment">
+        <option th:each="equipment : ${equipments}"
+                th:value="${equipment}" th:text="${equipment.getName()}">
+        </option>
+    </select>
+    <input type="submit" value="Создать технологического процесс">
+</form>
+</body>
+</html>

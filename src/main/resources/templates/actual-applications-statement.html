@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/applications-statement.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        input[type="text"] {
+            margin: 10px
+        }
+
+        h2 {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .actual-application{
+            display: inline-block;
+            background-color: black;
+            border: 1px solid black;
+            border-radius: 3px;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 10px;
+            margin: 10px;
+            width: 230px;
+        }
+        .actual-application:hover{
+            background-color: darkgrey;
+            color: white;
+            text-decoration: none;
+        }
+        .horizontal-container {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<div style="padding: 20px">
+    <h2>Cписок всех заявок</h2>
+    <div class="horizontal-container">
+        <input type="text" id="searchInput" placeholder="Поиск..." />
+        <a class="actual-application" th:href = "@{/technological-maps/applications/statement}">Все заявки</a>
+    </div>
+    <table id="dataTable">
+        <thead>
+        <tr>
+            <th>Фамилия и имя создателя</th>
+            <th>Название технологической карты</th>
+            <th>Версия</th>
+            <th>Ссылка</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="applicationOfTechnologicalMap : ${applicationOfTechnologicalMaps}">
+            <td th:text="${applicationOfTechnologicalMap.getUser().getFirstName()} + ' ' + ${applicationOfTechnologicalMap.getUser().getLastName()}"></td>
+            <td th:text="${applicationOfTechnologicalMap.getVersionTechnologicalCard().getTechnologicalCard().getName()}"></td>
+            <td th:text="${applicationOfTechnologicalMap.getVersion()}"></td>
+            <td>
+                <a th:href="@{/technological-maps/applications/statement/actual/statement/{id}(id=${applicationOfTechnologicalMap.getId()})}">Ссылка</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+<script src="/js/users.js"></script>
+</body>
+</html>

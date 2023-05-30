@@ -7,20 +7,16 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
-/* Стили для заголовка формы */
 form h2 {
-    font-size: 24px;
     margin-bottom: 40px;
 }
 
-/* Стили для меток полей ввода */
 form label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-/* Стили для полей ввода */
 form input ,
 form select {
     border: 1px solid black;
@@ -33,7 +29,6 @@ form select {
     width: 100%;
 }
 
-/* Стили для кнопки отправки формы */
 form input[type="submit"] {
     background-color: black;
     border: none;
@@ -44,7 +39,6 @@ form input[type="submit"] {
     padding: 10px 20px;
 }
 
-/* Стили для кнопки отправки формы при наведении курсора */
 form input[type="submit"]:hover {
     background-color: grey;
 }

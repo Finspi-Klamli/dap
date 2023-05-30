@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" , xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список оборудования</title>
+    <link rel="stylesheet" th:href="@{/css/admin-panel-tables.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<h1>Таблица с поиском технологический процесс</h1>
+<div style="padding: 20px">
+    <div class="horizontal-container">
+        <input class="search" type="text" id="searchInput" placeholder="Поиск..." />
+        <a class="button" th:href = "@{/admin/manufacturing-processes/create}">Создать технологический процесс</a>
+    </div>
+    <table id="dataTable">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Название оборудования</th>
+            <th>Изменить технологический процесс</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="manufacturingProcess : ${manufacturingProcesses}">
+            <td th:text="${manufacturingProcess.getId()}"></td>
+            <td th:text="${manufacturingProcess.getName()}"></td>
+            <td th:text="${manufacturingProcess.getDescription()}"></td>
+            <td th:text="${manufacturingProcess.getEquipment().getName()}"></td>
+            <th><a th:href="@{/admin/manufacturing-processes/{id}/update(id=${manufacturingProcess.getId()})}">Ссылка</a></th>
+        </tbody>
+    </table>
+</div>
+<div>
+</div>
+
+
+<script src="/js/users.js"></script>
+</body>
+</html>

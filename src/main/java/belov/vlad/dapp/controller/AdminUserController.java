@@ -53,15 +53,12 @@ public class AdminUserController {
     }
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id){
-        System.out.println("GETMAPPING");
-        System.out.println(userService.getById(Integer.toUnsignedLong(id)));
         model.addAttribute("user", userService.getById(Integer.toUnsignedLong(id)));
         return "admin/users/edit";
     }
     @PatchMapping("/{id}/edit")
     public String update(@PathVariable("id") int id, @ModelAttribute("user") @Valid User newUser, BindingResult bindingResult){
         User oldUser = userService.findByEmail(newUser.getEmail());
-        System.out.println(newUser);
         if(oldUser != null && newUser.getId()!= oldUser.getId()){
             FieldError error = new FieldError("user", "email", "Почта уже существует");
             bindingResult.addError(error);

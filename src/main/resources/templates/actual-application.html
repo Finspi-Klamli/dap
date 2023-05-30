@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/submit-card-for-approval.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+    <style>
+        .container {
+            margin-top: 100px;
+            margin-bottom: 50px;
+            max-width: 800px !important;
+            margin: 0 auto;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        .form-profile {
+            text-align: left;
+        }
+
+        .form-profile label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-profile input[type="text"],
+        .form-profile textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        .links {
+            margin-top: 30px;
+        }
+
+        .links form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .verdict {
+            background-color: black;
+            border: 1px solid black;
+            border-radius: 3px;
+            color: white;
+            font-size: 24px;
+            padding: 20px;
+            text-decoration: none;
+        }
+
+        .verdict:hover {
+            background-color: darkgrey;
+        }
+        h2{
+            margin-left: 0px !important;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<div class="container">
+    <div>
+        <form class="form-profile">
+            <h2>Принятие заявки на добавление новой технологической карты</h2>
+            <div>
+            <label for="info">Имя фамилия:</label>
+                <input type="text" id="info" name="info" th:value="${applicationOfTechnologicalMap.getUser().getFirstName()} + ' ' + ${applicationOfTechnologicalMap.getUser().getLastName()}" readonly="readonly">
+            </div>
+            <div>
+                <label for="name">Название технологической карты:</label>
+                <input type="text" id="name" name="name" th:value="${applicationOfTechnologicalMap.getVersionTechnologicalCard().getTechnologicalCard().getName()}" readonly="readonly">
+            </div>
+            <div>
+                <label for="version">Версия:</label>
+                <input style="width: 200px" type="text" id="version" name="version" th:value="${applicationOfTechnologicalMap.getVersion()}" readonly="readonly">
+            </div>
+            <div>
+                <label for="comment">Комментарий:</label>
+                <textarea type="text" id="comment" name="comment" th:text="${applicationOfTechnologicalMap.getComment()}" readonly="readonly"></textarea>
+            </div>
+            <div>
+                <h2>Вердикт по технологической карту</h2>
+                <label for="adminComment">Ваш комментарий:</label>
+                <textarea type="text" id="adminComment" name="adminComment"></textarea>
+            </div>
+                <div class="links">
+                    <form >
+                        <button th:if="${false}" type="submit">Кнопка</button>
+                    </form>
+
+                <form th:action="@{/technological-maps/applications/statement/actual/statement/{id}/create(id=${applicationOfTechnologicalMap.getId()})}" method="post">
+                    <button class="verdict" type="submit">Принять</button>
+                </form>
+
+                <form th:action="@{/technological-maps/applications/statement/actual/statement/{id}/reject(id=${applicationOfTechnologicalMap.getId()})}" method="post">
+                    <button class="verdict" type="submit">Отклонить</button>
+                </form>
+                </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

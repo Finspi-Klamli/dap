@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Изменить пользователя</title>
-    <link rel="stylesheet" th:href="@{/css/profileedit.css}"/>
+    <link rel="stylesheet" th:href="@{/css/create-update.css}"/>
     <div th:replace="pages/home/header :: header-css"/>
 </head>
 <body>
 <div th:replace="pages/home/header :: header"/>
-<div class="container-edit">
+<div class="container">
     <div>
         <form class="form-profile" th:method="PATCH", th:action="@{/admin/users/{id}/edit(id=${user.getId()})}" th:object="${user}">
             <label for="firstName">Введите имя</label>

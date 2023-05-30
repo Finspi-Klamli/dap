@@ -55,8 +55,6 @@ public class UserDataChangeServiceImpl implements UserDataChangeService {
                 Object ou = field1.get(oldUser);
                 Object nu = field2.get(newUser);
                 if(nu.equals(ou)){
-                    System.out.println(ou);
-                    System.out.println(nu);
                 }else {
                     UserDataChange userDataChange = new UserDataChange();
                     userDataChange.setUser(newUser);
@@ -68,7 +66,6 @@ public class UserDataChangeServiceImpl implements UserDataChangeService {
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
 }

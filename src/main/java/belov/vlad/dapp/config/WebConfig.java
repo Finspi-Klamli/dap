@@ -8,13 +8,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
     private final TechnologicalCardConverter technologicalCardConverter;
-
-    public WebConfig(TechnologicalCardConverter technologicalCardConverter) {
+    private final EquipmentConverter equipmentConverter;
+    private final ManufacturingProcessConvertor manufacturingProcessConvertor;
+    private final ProductConverter productConverter;
+    public WebConfig(TechnologicalCardConverter technologicalCardConverter, EquipmentConverter equipmentConverter
+            , ManufacturingProcessConvertor manufacturingProcessConvertor, ProductConverter productConverter) {
         this.technologicalCardConverter = technologicalCardConverter;
+        this.equipmentConverter = equipmentConverter;
+        this.manufacturingProcessConvertor = manufacturingProcessConvertor;
+        this.productConverter = productConverter;
     }
-
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(technologicalCardConverter);
+        registry.addConverter(equipmentConverter);
+        registry.addConverter(manufacturingProcessConvertor);
+        registry.addConverter(productConverter);
+
     }
 }

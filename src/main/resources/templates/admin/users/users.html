@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Пользователи</title>
-    <link rel="stylesheet" th:href="@{/css/users.css}"/>
+    <link rel="stylesheet" th:href="@{/css/admin-panel-tables.css}"/>
     <div th:replace="pages/home/header :: header-css"/>
 </head>
 <body>
@@ -14,7 +14,7 @@
 <div style="padding: 20px">
     <div class="horizontal-container">
         <input type="text" id="searchInput" placeholder="Поиск..." />
-        <a class=".button" th:href = "@{/admin/users/new}">Создать пользователя</a>
+        <a class="button" th:href = "@{/admin/users/new}">Создать пользователя</a>
     </div>
     <table id="dataTable">
         <thead>

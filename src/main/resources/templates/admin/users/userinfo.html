@@ -4,58 +4,134 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Иннформация о пользователе</title>
-    <link rel="stylesheet" th:href="@{/css/profile.css}"/>
+    <title>Информация о пользователе</title>
+<!--    <link rel="stylesheet" th:href="@{/css/profile.css}"/>-->
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 100px;
+            margin-bottom: 50px;
+        }
+        .container-profile {
+            overflow: auto;
+            margin-top: 100px;
+            margin-bottom: 50px;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        form h2 {
+            font-size: 24px;
+            margin-bottom: 40px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input, select {
+            border: 2px solid black;
+            border-radius: 3px;
+            box-sizing: border-box;
+            display: block;
+            font-size: 16px;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+        }
+        .button {
+            text-align: center;
+            background-color: black;
+            border: 1px solid black;
+            border-radius: 3px;
+            color: white;
+            box-sizing: border-box;
+            font-size: 16px;
+            padding: 10px;
+            width: 200px;
+            text-decoration: none;
+            margin: 10px;
+        }
+        .button:hover {
+            background-color: darkgrey;
+            color: white;
+            text-decoration: none;
+        }
+        .links {
+            display: flex;
+            justify-content: center;
+        }
+        .form-divide {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+    </style>
     <div th:replace="pages/home/header :: header-css"/>
 </head>
 
 <body>
 <div th:replace="pages/home/header :: header"/>
-<div class="container-profile">
-    <div class="links">
-        <a class="button" th:href="@{/admin/users/{id}/edit(id=${user.getId()})}">Изменить</a>
-        <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
-            <input class="button-delete" type="submit" value="Удалить">
-        </form>
+<div class="container">
+    <div class="container-profile">
+        <div class="links">
+            <a class="button" th:href="@{/admin/users/{id}/edit(id=${user.getId()})}">Изменить</a>
+            <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
+                <input class="button" type="submit" value="Удалить">
+            </form>
+        </div>
+
+        <div class="form-profile">
+            <h2>Информация о пользователе</h2>
+            <div class="form-divide">
+                <div>
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" name="id" th:value="${user.getId()}" readonly="readonly">
+                </div>
+                <div>
+                    <label for="firstName">Имя:</label>
+                    <input type="text" id="firstName" name="firstName" th:value="${user.getFirstName()}" readonly="readonly">
+                </div>
+                <div>
+                    <label for="lastName">Фамилия:</label>
+                    <input type="text" id="lastName" name="lastName" th:value="${user.getLastName()}" readonly="readonly">
+                </div>
+                <div>
+                    <label for="role">Роль:</label>
+                    <input type="text" id="role" name="role" th:value="${user.getRole()}" readonly="readonly">
+                </div>
+            </div>
+            <div class="form-divide">
+                <div>
+                    <label for="email">Почта:</label>
+                    <input type="email" id="email" name="email" th:value="${user.getEmail()}" readonly="readonly">
+                </div>
+                <div>
+                    <label for="password">Пароль:</label>
+                    <input type="text" id="password" name="password" th:value="${user.getPassword()}" readonly="readonly">
+                </div>
+                <div>
+                    <label for="status">Статус:</label>
+                    <input type="text" id="status" name="status" th:value="${user.getStatus()}" readonly="readonly">
+                </div>
+            </div>
+        </div>
     </div>
-
-
-    <div class="form-profile">
-        <h2>Информация о пользователе</h2>
-        <div class="form-divide">
-            <div>
-                <label for="id">ID:</label>
-                <input type="text" id="id" name="id" th:value="${user.getId()}" readonly="readonly">
-            </div>
-            <div>
-                <label for="firstName">Имя:</label>
-                <input type="text" id="firstName" name="firstName" th:value="${user.getFirstName()}" readonly="readonly">
-            </div>
-            <div>
-                <label for="lastName">Фамилия:</label>
-                <input type="text" id="lastName" name="lastName" th:value="${user.getLastName()}" readonly="readonly">
-            </div>
-            <div>
-                <label for="role">Роль:</label>
-                <input type="text" id="role" name="role" th:value="${user.getRole()}" readonly="readonly">
-            </div>
-        </div>
-        <div class="form-divide">
-            <div>
-                <label for="email">Почта:</label>
-                <input type="email" id="email" name="email" th:value="${user.getEmail()}" readonly="readonly">
-            </div>
-            <div>
-                <label for="password">Пароль:</label>
-                <input type="text" id="password" name="password" th:value="${user.getPassword()}" readonly="readonly">
-            </div>
-            <div>
-                <label for="status">Статус:</label>
-                <input type="text" id="status" name="status" th:value="${user.getStatus()}" readonly="readonly">
-            </div>
-        </div>
+    <div class="container-profile">
+        <h2>Избранные документы пользователя</h2>
+        <ul id="list">
+            <li  th:each = "favoriteMap : ${user.getFavoriteMaps()}">
+                <span th:text="${favoriteMap.getVersionTechnologicalCard().getTechnologicalCard().getName()} + ' версия' + ${favoriteMap.getVersionTechnologicalCard().getVersion()}"></span>
+                <div class="horizontal-container">
+                    <a style="color: black; font-weight: normal!important;" th:href="@{/pdf/{mapId}/{mapVersion}(mapId=${favoriteMap.getVersionTechnologicalCard().getTechnologicalCard().getId()},
+                    mapVersion=${favoriteMap.getVersionTechnologicalCard().getVersion()})}">Открыть</a>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
-
 </body>
 </html>

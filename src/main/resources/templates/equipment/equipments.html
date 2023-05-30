@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" , xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список оборудования</title>
+    <link rel="stylesheet" th:href="@{/css/admin-panel-tables.css}"/>
+    <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<h1>Таблица с поиском оборудования</h1>
+<div style="padding: 20px">
+    <div class="horizontal-container">
+        <input type="text" id="searchInput" placeholder="Поиск..." />
+        <a class="button" th:href = "@{/admin/equipments/create}">Создать оборудование</a>
+    </div>
+    <table id="dataTable">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Изменить на оборудование</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="equipment : ${equipments}">
+            <td th:text="${equipment.getId()}"></td>
+            <td th:text="${equipment.getName()}"></td>
+            <td th:text="${equipment.getDescription()}"></td>
+            <th><a th:href="@{/admin/equipments/{id}/update(id=${equipment.getId()})}">Ссылка</a></th>
+        </tbody>
+    </table>
+</div>
+<div>
+</div>
+
+
+<script src="/js/users.js"></script>
+</body>
+</html>

@@ -4,34 +4,17 @@
     <meta charset="UTF-8">
     <title>Поиск технологической карты</title>
     <div th:replace="pages/home/header :: header-css"/>
-    <style>
-        .main-body{
-            background-color: #DCDCDC;
-            height: 700px;
-            padding: 25px;
-        }
-        .container {
-            overflow: auto;
-            width: 800px;
-            height: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border: 4px solid black;
-            border-radius: 5px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/documentation.css}"/>
 </head>
 <body>
 <div th:replace="pages/home/header :: header"/>
 
-<div class="main-body">
+<div>
     <div class="container">
+        <h2>Документация технологических карт</h2>
         <input style="margin: 10px;" type="text" id="searchInput" placeholder="Поиск..." oninput="searchTree()">
-        <a th:href="@{/technological-maps/documentation}">Актуальные версии техн. карт</a>
-        <ul id="treeList">
+        <a class="active-link"th:href="@{/technological-maps}">Актуальные версии технологических карт</a>
+        <ul class="treeviewlist" id="treeList">
             <li th:each="equipment : ${equipments}">
                 <span th:text="${equipment.getName()}" onclick="toggleList(this)"></span>
                 <ul style="display: none;">
@@ -48,11 +31,15 @@
                                                     <span th:text="${versionTechnologicalCards.getTechnologicalCard().getName()} + ' версия '+${versionTechnologicalCards.getVersion()} +
                                                     ' статус ' + ${versionTechnologicalCards.getStatusTechnologicalCard().getName()}" onclick="toggleList(this)"></span>
                                                     <div>
-                                                        <a th:href="@{/pdf/{cardId}/{cardVersion}(cardId=${versionTechnologicalCards.getTechnologicalCard().getId()}, cardVersion = ${versionTechnologicalCards.getVersion()})}">Открыть</a>
+                                                        <a style="font-weight: normal!important; color: black;" th:href="@{ /technological-maps/{id}/update(id=${versionTechnologicalCards.getTechnologicalCard().getId()})}">Изменить</a>
+                                                    </div>
+                                                    <div class="horizontal-container">
+
+                                                        <a style="font-weight: normal!important; color: black;" th:href="@{/pdf/{cardId}/{cardVersion}(cardId=${versionTechnologicalCards.getTechnologicalCard().getId()}, cardVersion = ${versionTechnologicalCards.getVersion()})}">Открыть</a>
                                                         <form th:action="@{/technological-maps/add}" method="post">
                                                             <input type="hidden" name="card_id" th:value="${technologicalCard.getId()}" />
                                                             <input type="hidden" name="card_version" th:value="${versionTechnologicalCards.getVersion()}" />
-                                                            <button type="submit">Добавить в избранное</button>
+                                                            <button class="underline-on-hover" type="submit">Добавить в избранное</button>
                                                         </form>
                                                     </div>
                                                 </li>

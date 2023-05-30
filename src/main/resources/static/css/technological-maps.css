@@ -1,0 +1,52 @@
+.container{
+    overflow: auto;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    margin-bottom: 50px;
+    max-width: 800px !important;
+    height: 600px;
+    margin-top: 30px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+input[type="text"] {
+    margin: 0px;
+    height: 45px;
+    border-radius: 5px;
+    border: 2px solid;
+}
+.documentation-link{
+    text-align: center;
+    display: inline-block;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 10px;
+    margin: 10px;
+}
+.documentation-link:hover{
+    background-color: darkgrey;
+    color: white;
+    text-decoration: none;
+}
+.horizontal-container {
+    display: flex!important;
+    flex-direction: row;
+}
+.horizontal-container > * {
+    margin-right: 10px; /* Опционально: добавляет промежуток между элементами */
+}
+.underline-on-hover:hover {
+    text-decoration: underline;
+}
+.treeviewlist{
+    font-size: 18px;
+}
+form h2 {
+    font-size: 24px;
+    margin-bottom: 40px;
+}

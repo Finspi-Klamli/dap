@@ -29,6 +29,12 @@ public class FavoriteMapsServiceImpl implements FavoriteMapsService{
     }
 
     @Override
+    public void delete(User user, VersionTechnologicalCard versionTechnologicalMapId) {
+        FavoriteMap favoriteMap = favoriteMapsRepository.findAll().stream().filter(fm->fm.getUser().getId().equals(user.getId())
+                && fm.getVersionTechnologicalCard().getId().equals(versionTechnologicalMapId.getId())).findFirst().orElse(null);
+        favoriteMapsRepository.delete(favoriteMap);
+    }
+    @Override
     public void create(User user, VersionTechnologicalCard versionTechnologicalMapId) {
         FavoriteMap favoriteMap = new FavoriteMap(user, versionTechnologicalMapId);
         if(favoriteMapsRepository.findAll().stream().anyMatch(fm -> fm.getVersionTechnologicalCard()

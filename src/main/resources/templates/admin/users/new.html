@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Новый пользователь</title>
-    <link rel="stylesheet" th:href="@{/css/profileedit.css}"/>
+    <link rel="stylesheet" th:href="@{/css/create-update.css}"/>
     <div th:replace="pages/home/header :: header-css"/>
 </head>
 <body>
 <div th:replace="pages/home/header :: header"/>
-<form class="container-edit" th:method="POST", th:action="@{/admin/users/new}" th:object="${user}">
+<form class="container" th:method="POST", th:action="@{/admin/users/new}" th:object="${user}">
     <h2>Введите данные пользователя</h2>
 
     <label for="firstName">Введите имя</label>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" , xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Список оборудования</title>
+  <link rel="stylesheet" th:href="@{/css/admin-panel-tables.css}"/>
+  <div th:replace="pages/home/header :: header-css"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<h1>Таблица с поиском продукта</h1>
+<div style="padding: 20px">
+  <div class="horizontal-container">
+    <input type="text" id="searchInput" placeholder="Поиск..." />
+    <a class="button" th:href = "@{/admin/products/create}">Создать продукт</a>
+  </div>
+  <table id="dataTable">
+    <thead>
+    <tr>
+      <th>id</th>
+      <th>Название</th>
+      <th>Описание</th>
+      <th>Название технологического процесса</th>
+      <th>Название оборудования</th>
+      <th>Изменить продукт</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+      <td th:text="${product.getId()}"></td>
+      <td th:text="${product.getName()}"></td>
+      <td th:text="${product.getDescription()}"></td>
+      <td th:text="${product.getManufacturingProcess().getName()}"></td>
+      <td th:text="${product.getManufacturingProcess().getEquipment().getName()}"></td>
+      <th>
+        <a th:href="@{/admin/products/{id}/update(id=${product.getId()})}">Ссылка</a>
+      </th>
+    </tbody>
+  </table>
+</div>
+<div>
+</div>
+
+
+<script src="/js/users.js"></script>
+</body>
+</html>

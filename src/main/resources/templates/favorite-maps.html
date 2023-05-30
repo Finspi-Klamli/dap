@@ -11,13 +11,19 @@
 <body>
 <div th:replace="pages/home/header :: header"/>
   <div class="container">
+      <h2>Избранное</h2>
       <input type="text" id="searchInput" placeholder="Поиск...">
       <ul id="list">
         <li  th:each = "map : ${maps}">
-            <div>
                 <span th:text="${map.getTechnologicalCard().getName()} + ' версия' + ${map.getVersion()}"></span>
-                <a th:href="@{/pdf/{mapId}/{mapVersion}(mapId=${map.getTechnologicalCard().getId()},
+            <div class="horizontal-container">
+            <a style="color: black; font-weight: normal!important;" th:href="@{/pdf/{mapId}/{mapVersion}(mapId=${map.getTechnologicalCard().getId()},
                 mapVersion=${map.getVersion()})}">Открыть</a>
+                <form th:action="@{/technological-maps/delete}" method="post">
+                    <input type="hidden" name="card_id" th:value="${map.getTechnologicalCard().getId()}" />
+                    <input type="hidden" name="card_version" th:value="${map.getVersion()}" />
+                    <button class="underline-on-hover" type="submit">Удалить из избранного</button>
+                </form>
             </div>
         </li>
       </ul>

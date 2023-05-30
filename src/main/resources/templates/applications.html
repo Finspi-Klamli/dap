@@ -11,6 +11,7 @@
 <body>
 <div th:replace="pages/home/header :: header"/>
 <div class="container">
+    <h1>Ваши заявки</h1>
     <div class="horizontal-container">
         <input type="text" id="searchInput" placeholder="Поиск..." />
         <a class="back-link" href="/technological-maps/submit-card-for-approval">Назад</a>
@@ -23,7 +24,7 @@
              <th>Статус     </th>
              <th>Дата создания   </th>
              <th>Ваш комментарий  </th>
-             <th>Комментарий  администратора</th>
+             <th>Комментарий администратора</th>
          </tr>
          </thead>
          <tbody>
@@ -34,7 +35,6 @@
              <td th:text="${applicationOfTechnologicalMap.getDateOfCreation()}"></td>
              <td th:text="${applicationOfTechnologicalMap.getComment()}"></td>
              <td th:text="${applicationOfTechnologicalMap.getAdminComment()}"></td>
-
          </tbody>
      </table>
 </div>

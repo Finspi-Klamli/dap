@@ -3,6 +3,7 @@ package belov.vlad.dapp.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -12,10 +13,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotEmpty(message = "поле 'имя' не может быть пустым")
     @Column(name = "name")
     private String name;
 
+    @NotEmpty(message = "поле 'описание' не может быть пустым")
     @Column(name = "description")
     private String description;
 
@@ -25,6 +27,9 @@ public class Product {
 
     @OneToOne(mappedBy = "product")
     private TechnologicalCard technologicalCard;
+
+    public Product() {
+    }
 
     @Override
     public String toString() {

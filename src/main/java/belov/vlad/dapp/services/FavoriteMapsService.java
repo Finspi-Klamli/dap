@@ -10,6 +10,7 @@ import java.util.List;
 public interface FavoriteMapsService {
     List<FavoriteMap> findAll();
     List<FavoriteMap> findByUserEmail(String email);
+     void delete(User user, VersionTechnologicalCard versionTechnologicalMapId);
 
-    public void create(User user, VersionTechnologicalCard versionTechnologicalMapId);
+     void create(User user, VersionTechnologicalCard versionTechnologicalMapId);
 }

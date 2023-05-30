@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en", xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск технологической карты</title>
+    <div th:replace="pages/home/header :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/technological-maps.css}"/>
+</head>
+<body>
+<div th:replace="pages/home/header :: header"/>
+<div class="container-edit">
+    <div>
+        <form class="form-profile" th:method="PATCH", th:action="@{/technological-maps/{id}/update(id=${technologicalMap.getId()})}" th:object="${technologicalMap}">
+            technologicalMap
+<!--            description-->
+            <label for="name">Название карты</label>
+            <input type="text" th:field="*{name}" id ="name"/>
+
+            <label for="description">Описание технологической:</label>
+            <textarea type="text" id="description" name="description" placeholder="Введите изменения"></textarea>
+<!--название тк-->
+<!--описание тк-->
+
+            <input type="submit" value="Сохранить изменения">
+
+        </form>
+    </div>
+</div>
+</body>
+</html>

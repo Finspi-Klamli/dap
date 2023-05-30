@@ -30,4 +30,29 @@ public class TechnologicalCardServiceImpl implements TechnologicalCardService {
                 .findFirst().orElse(null);
         return tc;
     }
+
+    @Override
+    public TechnologicalCard findByName(String cardName) {
+        return technologicalCardRepository.findAll().stream().filter(tc ->tc.getName().equals(cardName)).findFirst().orElse(null);
+    }
+
+    @Override
+    public void save(TechnologicalCard tc) {
+        technologicalCardRepository.save(tc);
+    }
+
+    @Override
+    public TechnologicalCard findById(Long id) {
+        return technologicalCardRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public void update(Long id, TechnologicalCard technologicalCard) {
+        TechnologicalCard tc = technologicalCardRepository.findById(id).orElse(null);
+        tc.setName(technologicalCard.getName());
+        tc.setLastVersion(technologicalCard.getLastVersion());
+        tc.setDescription(technologicalCard.getDescription());
+        tc.setProduct(technologicalCard.getProduct());
+        technologicalCardRepository.save(tc);
+    }
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
@@ -14,13 +15,13 @@ public class TechnologicalCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotEmpty(message = "поле 'название' не может быть пустым")
     @Column(name = "name")
     private String name;
-
+    @NotEmpty(message = "поле 'описание' не может быть пустым")
     @Column(name = "description")
     private String description;
-
+    @NotEmpty(message = "поле 'последняя версия' не может быть пустым")
     @Column(name = "last_version")
     private String lastVersion;
 
@@ -29,6 +30,10 @@ public class TechnologicalCard {
     private Product product;
     @OneToMany(mappedBy = "technologicalCard")
     private List<VersionTechnologicalCard> versionTechnologicalCards;
+
+    public TechnologicalCard() {
+    }
+
     public List<VersionTechnologicalCard> getVersionTechnologicalCards() {
         if(versionTechnologicalCards == null)
             return null;

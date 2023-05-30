@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <title>Панель администратора</title>
     <div th:replace="pages/home/header :: header-css"/>
+    <link rel="stylesheet" th:href="@{/css/admin.css}"/>
 </head>
 <body>
 <div th:replace="pages/home/header :: header"/>
-    <a href="/admin/users">Пользователи</a>
-    <a href="/admin/users/user-data-changes">Изменения данных пользователей</a>
-    <a href="/admin/users/user-data-changes">Заявки на утверждение</a>
-    <a href="/admin/users/user-data-changes">Технологические карты</a>
-
+<div class="container">
+    <h2>Панель администратора</h2>
+    <a class="link" href="/admin/users">Пользователи</a>
+    <a class="link" href="/admin/users/user-data-changes">Изменения данных пользователей</a>
+    <a class="link" href="/technological-maps/applications/statement">Заявки на утверждение</a>
+    <a class="link" href="/admin/equipments">Оборудование</a>
+    <a class="link" href="/admin/manufacturing-processes">Технологические процессы</a>
+    <a class="link" href="/admin/products">Производимые продукты</a>
+    <a class="link" href="/admin/technological-cards">Технологические карты</a>
+</div>
 </body>
 </html>

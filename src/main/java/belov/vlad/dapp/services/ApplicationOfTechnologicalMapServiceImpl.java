@@ -25,4 +25,15 @@ public class ApplicationOfTechnologicalMapServiceImpl implements ApplicationOfTe
         return applicationOfTechnologicalMapRepository.findAll().stream()
                 .filter(atm -> atm.getUser().getId().equals(id)).collect(Collectors.toList());
     }
+
+    @Override
+    public ApplicationOfTechnologicalMap findById(Long id) {
+        return applicationOfTechnologicalMapRepository.findById(id).get();
+    }
+
+    @Override
+    public List<ApplicationOfTechnologicalMap> findAll() {
+        return applicationOfTechnologicalMapRepository.findAll();
+    }
+
 }
