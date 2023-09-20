@@ -6,7 +6,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWt0Q1T38CV9gQLZMwwDO8fEm5NcZuUCTX" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/login.css}"/>
-
+    <style>
+        .ss {
+            border-color: red !important;
+        }
+    </style>
     <div th:replace="pages/home/header :: header-css"/>
 </head>
 <body>
@@ -22,11 +26,6 @@
                     <input class="ss" type="text" id="username" name="username" placeholder="Введите почту" required="required"/>
                     <div th:if="${errorMessage}">
                         <p style="color: red;" th:text="${errorMessage}"></p>
-                        <style>
-                            .ss {
-                                border-color: red !important;
-                            }
-                        </style>
                     </div>
                 </div>
                 <div class="form-group">

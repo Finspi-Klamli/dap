@@ -12,7 +12,8 @@
     <h2>Заполните заявку на добавления технологической кары</h2>
     <div>
     <a class="applications-link" th:href="@{/technological-maps/submit-card-for-approval/applications}">Посмотреть заявки</a>
-    <form class="container-edit" th:method="POST", th:action="@{/technological-maps/submit-card-for-approval}" enctype="multipart/form-data" th:object="${applicationOfTechnologicalMap}">
+    <form class="container-edit" th:method="POST", th:action="@{/technological-maps/submit-card-for-approval}"
+          enctype="multipart/form-data" th:object="${applicationOfTechnologicalMap}">
     <div class = "div-block">
         <label for="technologicalCard">Выберите карту</label>
         <select th:field="*{technologicalCard}" id="technologicalCard">

@@ -16,9 +16,4 @@ public class AuthController {
         }
         return "/authorization/login";
     }
-    @GetMapping("/login-error")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "/authorization/login";
-    }
 }

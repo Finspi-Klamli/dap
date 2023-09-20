@@ -2,6 +2,7 @@ package belov.vlad.dapp.config;
 
 import belov.vlad.dapp.converter.EquipmentConverter;
 import belov.vlad.dapp.converter.ManufacturingProcessConvertor;
+import belov.vlad.dapp.converter.ProductConverter;
 import belov.vlad.dapp.converter.TechnologicalCardConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -14,8 +15,10 @@ public class WebConfig implements WebMvcConfigurer {
     private final EquipmentConverter equipmentConverter;
     private final ManufacturingProcessConvertor manufacturingProcessConvertor;
     private final ProductConverter productConverter;
-    public WebConfig(TechnologicalCardConverter technologicalCardConverter, EquipmentConverter equipmentConverter
-            , ManufacturingProcessConvertor manufacturingProcessConvertor, ProductConverter productConverter) {
+    public WebConfig(TechnologicalCardConverter technologicalCardConverter,
+                     EquipmentConverter equipmentConverter
+            , ManufacturingProcessConvertor manufacturingProcessConvertor,
+                     ProductConverter productConverter) {
         this.technologicalCardConverter = technologicalCardConverter;
         this.equipmentConverter = equipmentConverter;
         this.manufacturingProcessConvertor = manufacturingProcessConvertor;
@@ -27,6 +30,5 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addConverter(equipmentConverter);
         registry.addConverter(manufacturingProcessConvertor);
         registry.addConverter(productConverter);
-
     }
 }

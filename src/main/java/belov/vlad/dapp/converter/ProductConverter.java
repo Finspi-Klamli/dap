@@ -1,4 +1,4 @@
-package belov.vlad.dapp.config;
+package belov.vlad.dapp.converter;
 
 import belov.vlad.dapp.model.Product;
 import belov.vlad.dapp.services.ProductsService;

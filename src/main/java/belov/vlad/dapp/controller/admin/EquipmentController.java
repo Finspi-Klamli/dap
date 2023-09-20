@@ -20,28 +20,28 @@ public class EquipmentController {
     @GetMapping
     public String getEquipmentsPage(Model model){
         model.addAttribute("equipments", equipmentService.findAll());
-        return "equipment/equipments";
+        return "admin/equipment/equipments";
     }
     @GetMapping("/{id}/update")
     public String getEquipmentsUpdatePage(@PathVariable("id") Long id, Model model){
         model.addAttribute("equipment",equipmentService.findById(id));
-        return "equipment/update";
+        return "admin/equipment/update";
     }
     @PatchMapping("/{id}/update")
     public String equipmentUpdate(@PathVariable("id") Long id, @ModelAttribute("equipment") @Valid Equipment equipment, BindingResult bindingResult){
         if (bindingResult.hasErrors())
-            return "equipment/update";
+            return "admin/equipment/update";
         equipmentService.update(id,equipment);
         return "redirect:/admin/equipments";
     }
     @GetMapping("/create")
     public String getEquipmentsCreatePage(@ModelAttribute("equipment") Equipment equipment){
-        return "equipment/create";
+        return "admin/equipment/create";
     }
     @PostMapping("/create")
     public String createEquipments(@ModelAttribute("equipment") @Valid Equipment equipment, BindingResult bindingResult){
         if(bindingResult.hasErrors())
-            return "equipment/create";
+            return "admin/equipment/create";
         equipmentService.save(equipment);
         return "redirect:/admin/equipments";
     }

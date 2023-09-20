@@ -25,14 +25,14 @@ public class ManufacturingProcessController {
     @GetMapping
     public String getManufacturingProcessesPage(Model model){
         model.addAttribute("manufacturingProcesses", manufacturingProcessService.findAll());
-        return "manufacturing-process/manufacturing-processes";
+        return "admin/manufacturing-process/manufacturing-processes";
     }
 
     @GetMapping("/{id}/update")
     public String getManufacturingProcessUpdatePage(@PathVariable("id") Long id, Model model){
         model.addAttribute("equipments",equipmentService.findAll());
         model.addAttribute("manufacturingProcess",manufacturingProcessService.findById(id));
-        return "manufacturing-process/update";
+        return "admin/manufacturing-process/update";
     }
     @PatchMapping("/{id}/update")
     public String manufacturingProcessUpdate(@PathVariable("id") Long id, @ModelAttribute("manufacturingProcess") @Valid ManufacturingProcess manufacturingProcess, BindingResult bindingResult){
@@ -44,13 +44,13 @@ public class ManufacturingProcessController {
     @GetMapping("/create")
     public String getManufacturingProcessCreatePage(@ModelAttribute("manufacturingProcess") ManufacturingProcess manufacturingProcess, Model model){
         model.addAttribute("equipments",equipmentService.findAll());
-        return "manufacturing-process/create";
+        return "admin/manufacturing-process/create";
     }
     @PostMapping("/create")
     public String createManufacturingProcess(Model model,@ModelAttribute("manufacturingProcess") @Valid ManufacturingProcess manufacturingProcess, BindingResult bindingResult){
         if(bindingResult.hasErrors()) {
             model.addAttribute("equipments",equipmentService.findAll());
-            return "manufacturing-process/create";
+            return "admin/manufacturing-process/create";
         }
         manufacturingProcessService.save(manufacturingProcess);
         return "redirect:/admin/manufacturing-processes";

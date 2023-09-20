@@ -22,12 +22,10 @@ public class ProfileController {
     private final UserDataChangeServiceImpl userDataChangeService;
     private final UserServiceImpl userService;
 
-
     public ProfileController(UserDataChangeServiceImpl userDataChangeService, UserServiceImpl userService) {
         this.userDataChangeService = userDataChangeService;
         this.userService = userService;
     }
-
     @GetMapping()
     public String getProfilePage(@AuthenticationPrincipal UserDetails currentUser, Model model) {
         if (currentUser == null) {
@@ -36,13 +34,11 @@ public class ProfileController {
         model.addAttribute("user", user);
         return "user/profile";
     }
-
     @GetMapping("/update")
     public String getUpdateProfilePage(@AuthenticationPrincipal UserDetails currentUser, Model model) {
         model.addAttribute("user", userService.findByEmail(currentUser.getUsername()));
         return "user/editinfo";
     }
-
     @PatchMapping("/update")
     public String updateProfile(@AuthenticationPrincipal UserDetails currentUser, @ModelAttribute("user") @Valid User newUser, BindingResult bindingResult) {
         User oldUser = userService.findByEmail(currentUser.getUsername());
@@ -56,13 +52,11 @@ public class ProfileController {
         userService.update(newUser);
         return "redirect:/profile";
     }
-
     @GetMapping("/update-password")
     public String getUpdatePasswordPage(Model model) {
         model.addAttribute("user", new User());
         return "user/editpas";
     }
-
     @PatchMapping("/update-password")
     public String updatePassword(@AuthenticationPrincipal UserDetails currentUser,
                                             @RequestParam("currentPassword") String currentPassword,
@@ -74,11 +68,11 @@ public class ProfileController {
 
         if (!userService.checkPassword(user, currentPassword)) {
             redirectAttributes.addFlashAttribute("error", "Invalid current password");
-            return "redirect:/update-password";
+            return "user/editpas";
         }
         if (!newPassword.equals(confirmPassword)) {
             redirectAttributes.addFlashAttribute("error", "New password and confirm password do not match");
-            return "redirect:/update-password";
+            return "user/editpas";
         }
         userService.changePassword(user, newPassword);
         redirectAttributes.addFlashAttribute("success", "Password changed successfully");

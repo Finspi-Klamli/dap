@@ -30,9 +30,6 @@
                                                 <li th:each="versionTechnologicalCards : ${technologicalCard.getVersionTechnologicalCards()}">
                                                     <span th:text="${versionTechnologicalCards.getTechnologicalCard().getName()} + ' версия '+${versionTechnologicalCards.getVersion()} +
                                                     ' статус ' + ${versionTechnologicalCards.getStatusTechnologicalCard().getName()}" onclick="toggleList(this)"></span>
-                                                    <div>
-                                                        <a style="font-weight: normal!important; color: black;" th:href="@{ /technological-maps/{id}/update(id=${versionTechnologicalCards.getTechnologicalCard().getId()})}">Изменить</a>
-                                                    </div>
                                                     <div class="horizontal-container">
 
                                                         <a style="font-weight: normal!important; color: black;" th:href="@{/pdf/{cardId}/{cardVersion}(cardId=${versionTechnologicalCards.getTechnologicalCard().getId()}, cardVersion = ${versionTechnologicalCards.getVersion()})}">Открыть</a>

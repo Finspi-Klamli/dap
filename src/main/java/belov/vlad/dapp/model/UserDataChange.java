@@ -17,24 +17,18 @@ public class UserDataChange {
         this.oldValue = oldValue;
         this.newValue = newValue;
     }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
     @Column(name = "change_date", nullable = false)
     private LocalDate changeDate;
-
     @Column(name = "field_name", nullable = false)
     private String fieldName;
-
     @Column(name = "old_value", nullable = false)
     private String oldValue;
-
     @Column(name = "new_value", nullable = false)
     private String newValue;
 

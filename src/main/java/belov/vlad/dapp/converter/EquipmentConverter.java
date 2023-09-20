@@ -8,11 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class EquipmentConverter implements Converter<String, Equipment> {
     private final EquipmentService equipmentService;
-
     public EquipmentConverter(EquipmentService equipmentService) {
         this.equipmentService = equipmentService;
     }
-
     @Override
     public Equipment convert(String s) {
         return equipmentService.findForConversion(s);

@@ -24,19 +24,19 @@ public class ProductController {
     @GetMapping
     public String getProductPage(Model model){
         model.addAttribute("products", productsService.findAll());
-        return "product/products";
+        return "admin/product/products";
     }
     @GetMapping("/{id}/update")
     public String getProductUpdatePage(@PathVariable("id") Long id, Model model){
         model.addAttribute("manufacturingProcesses",manufacturingProcessService.findAll());
         model.addAttribute("product", productsService.findById(id));
-        return "product/update";
+        return "admin/product/update";
     }
     @PatchMapping("/{id}/update")
     public String productUpdate(Model model, @PathVariable("id") Long id, @ModelAttribute("equipment") @Valid Product product, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             model.addAttribute("manufacturingProcesses",manufacturingProcessService.findAll());
-            return "product/update";
+            return "admin/product/update";
         }
         productsService.update(id,product);
         return "redirect:/admin/products";
@@ -44,14 +44,14 @@ public class ProductController {
     @GetMapping("/create")
     public String getProductCreatePage(@ModelAttribute("product") Product product, Model model){
         model.addAttribute("manufacturingProcesses", manufacturingProcessService.findAll());
-        return "product/create";
+        return "admin/product/create";
     }
     @PostMapping("/create")
     public String createProduct(Model model, @ModelAttribute("product") @Valid Product product, BindingResult bindingResult){
         if(bindingResult.hasErrors()) {
             System.out.println("error");
             model.addAttribute("manufacturingProcesses", manufacturingProcessService.findAll());
-            return "product/create";
+            return "admin/product/create";
         }
         productsService.save(product);
         return "redirect:/admin/products";

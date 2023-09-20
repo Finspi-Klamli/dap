@@ -13,18 +13,13 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
-
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private final UserRepository userRepository;
-
     @Autowired
     PasswordEncoder passwordEncoder;
-
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
     @Override
     public User getById(Long id) {
         return userRepository.findById(id).orElse(null);

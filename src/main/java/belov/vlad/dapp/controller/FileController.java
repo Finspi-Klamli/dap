@@ -28,21 +28,14 @@ public class FileController {
         this.fileDataService = fileDataService;
         this.versionTechnologicalCardService = versionTechnologicalCardService;
     }
-
-    @GetMapping("/pdf")
-    public String getPdfFiles(Model model) {
-        //model.addAttribute("pdfFiles", fileDataService.findAll());
-        return "pdf";
-    }
     @GetMapping("/pdf/{id}/{version}")
-    public void downloadPdf(HttpServletResponse response, @PathVariable("id") Long id,
+    public void openPdf(HttpServletResponse response, @PathVariable("id") Long id,
                             @PathVariable("version") String version) throws IOException {
         VersionTechnologicalCard versionTechnologicalCard = versionTechnologicalCardService
                 .findByVersionAndTechnologicalCards(id, version);
         FileData fileData = versionTechnologicalCard.getFileData();
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=" + fileData.getName());
-
         response.getOutputStream().write(fileData.getData());
         response.getOutputStream().flush();
     }

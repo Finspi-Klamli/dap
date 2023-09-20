@@ -1,8 +1,7 @@
-package belov.vlad.dapp.controller;
+package belov.vlad.dapp.controller.admin;
 
 import belov.vlad.dapp.model.Status;
 import belov.vlad.dapp.model.User;
-import belov.vlad.dapp.model.Role;
 import belov.vlad.dapp.services.UserDataChangeServiceImpl;
 import belov.vlad.dapp.services.UserServiceImpl;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,10 +16,10 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin/users")
 @PreAuthorize("hasAuthority('admin')")
-public class AdminUserController {
+public class UserController {
     private final UserServiceImpl userService;
     private final UserDataChangeServiceImpl userDataChangeService;
-    public AdminUserController(UserServiceImpl userService, UserDataChangeServiceImpl userDataChangeService) {
+    public UserController(UserServiceImpl userService, UserDataChangeServiceImpl userDataChangeService) {
         this.userService = userService;
         this.userDataChangeService = userDataChangeService;
     }

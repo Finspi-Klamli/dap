@@ -16,18 +16,15 @@ public class FavoriteMapsServiceImpl implements FavoriteMapsService{
     public FavoriteMapsServiceImpl(FavoriteMapsRepository favoriteMapsRepository) {
         this.favoriteMapsRepository = favoriteMapsRepository;
     }
-
     @Override
     public List<FavoriteMap> findAll() {
         return favoriteMapsRepository.findAll();
     }
-
     @Override
     public List<FavoriteMap> findByUserEmail(String email) {
         return findAll().stream().filter(favoriteMap -> favoriteMap.getUser().getEmail()
                 .equals(email)).collect(Collectors.toList());
     }
-
     @Override
     public void delete(User user, VersionTechnologicalCard versionTechnologicalMapId) {
         FavoriteMap favoriteMap = favoriteMapsRepository.findAll().stream().filter(fm->fm.getUser().getId().equals(user.getId())

@@ -14,13 +14,10 @@ import java.util.Set;
 
 @Data
 public class SecurityUser implements UserDetails {
-
     private final String username;
     private final String password;
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
-
-
     public SecurityUser(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
         this.username = username;
         this.password = password;

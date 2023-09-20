@@ -1,7 +1,6 @@
 package belov.vlad.dapp.controller.admin;
 
 
-import belov.vlad.dapp.model.Product;
 import belov.vlad.dapp.model.TechnologicalCard;
 import belov.vlad.dapp.services.ProductsService;
 import belov.vlad.dapp.services.TechnologicalCardService;
@@ -26,19 +25,19 @@ public class TechnologicalCardController {
     @GetMapping
     public String getTechnologicalCardPage(Model model){
         model.addAttribute("technologicalCards", technologicalCardService.findAll());
-        return "technological-card/technological-cards";
+        return "admin/technological-card/technological-cards";
     }
     @GetMapping("/create")
     public String getTechnologicalCardCreatePage(@ModelAttribute("technologicalCard") TechnologicalCard technologicalCard, Model model){
         model.addAttribute("products", productsService.findProductWithoutCard());
-        return "technological-card/create";
+        return "admin/technological-card/create";
     }
     @PostMapping("/create")
     public String createTechnologicalCard(Model model, @ModelAttribute("technologicalCard") @Valid TechnologicalCard technologicalCard, BindingResult bindingResult){
         if(bindingResult.hasErrors()) {
             System.out.println("error");
             model.addAttribute("products", productsService.findProductWithoutCard());
-            return "technological-card/create";
+            return "admin/technological-card/create";
         }
         technologicalCardService.save(technologicalCard);
         return "redirect:/admin/technological-cards";
@@ -47,14 +46,14 @@ public class TechnologicalCardController {
     public String getEquipmentsUpdatePage(@PathVariable("id") Long id, Model model){
         model.addAttribute("technologicalCard", technologicalCardService.findById(id));
         model.addAttribute("products", productsService.findProductWithoutCard());
-        return "technological-card/update";
+        return "admin/technological-card/update";
     }
     @PatchMapping("/{id}/update")
     public String equipmentUpdate(Model model, @PathVariable("id") Long id, @ModelAttribute("technologicalCard") @Valid TechnologicalCard technologicalCard, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             System.out.println("err");
             model.addAttribute("products", productsService.findProductWithoutCard());
-            return "technological-card/update";
+            return "admin/technological-card/update";
         }
         System.out.println("upda");
         technologicalCardService.update(id,technologicalCard);
